@@ -11,6 +11,14 @@ module.exports = {
         filename: '[name].js',
     },
 
+    plugins: [
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery'
+        })
+    ],
+
     module: {
         loaders: [
             {

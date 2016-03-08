@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 
 from rest_framework import viewsets
 
-from .serializers import UserSerializer, FlightSerializer
-from .models import Flight
+from .serializers import UserSerializer, AirportSerializer, FlightSerializer
+from .models import Flight, Airport
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -18,3 +18,11 @@ class FlightViewSet(viewsets.ModelViewSet):
     """
     serializer_class = FlightSerializer
     queryset = Flight.objects.all()
+
+class AirportViewSet(viewsets.ModelViewSet):
+    """
+    A viewset for listing airports
+    """
+    serializer_class = AirportSerializer
+    queryset = Airport.objects.all()
+    search_fields = ('city',)

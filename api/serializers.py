@@ -2,7 +2,12 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from .models import Flight
+from .models import Flight, Airport
+
+class AirportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Airport
+        fields = ('city', 'iata')
 
 class FlightSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.HyperlinkedRelatedField(view_name='user-detail', read_only=True)

@@ -1,5 +1,5 @@
 var React = require('react')
-require('react-select/dist/react-select.css')
+require('react-select/dist/default.css')
 var Select = require('react-select')
 
 module.exports = React.createClass({
@@ -19,7 +19,8 @@ module.exports = React.createClass({
     },
     handleChange: function(input, callback) {
         var that = this
-        if (input.length==3){
+        callback(null, {options: [{value:'cool',label:'nice'},{value:'wow',label:'doge'}]}) 
+        /*if (input.length==3){
             this.getAirports(input)
             setTimeout(function() {
                 airports = that.state.airports.map(function(i){
@@ -28,15 +29,22 @@ module.exports = React.createClass({
                 callback(null, {options: [{value:'cool',label:'nice'},{value:'wow',label:'doge'}]}) 
             }, 500)
         
-        }
+        }*/
     },
+
+    options: [
+        {value: 'neat', label: 'neat'},
+        {value: 'wow', label: 'wow'}
+    ],
 
     render: function() {
         return (
+            <div>
             <Select.Async
                 name="from-select"
                 loadOptions={this.handleChange}
             />
+            </div>
         )
     }
 })

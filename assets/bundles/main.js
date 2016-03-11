@@ -19748,22 +19748,31 @@
 	    },
 	    handleChange: function (input, callback) {
 	        var that = this;
-	        if (input.length == 3) {
-	            this.getAirports(input);
-	            setTimeout(function () {
-	                airports = that.state.airports.map(function (i) {
-	                    return { value: i.iata, label: i.city + " (" + i.iata + ")" };
-	                });
-	                callback(null, { options: [{ value: 'cool', label: 'nice' }, { value: 'wow', label: 'doge' }] });
-	            }, 500);
-	        }
+	        callback(null, { options: [{ value: 'cool', label: 'nice' }, { value: 'wow', label: 'doge' }] });
+	        /*if (input.length==3){
+	            this.getAirports(input)
+	            setTimeout(function() {
+	                airports = that.state.airports.map(function(i){
+	                    return {value: i.iata, label: i.city + " (" + i.iata + ")"}
+	                    })
+	                callback(null, {options: [{value:'cool',label:'nice'},{value:'wow',label:'doge'}]}) 
+	            }, 500)
+	        
+	        }*/
 	    },
 
+	    options: [{ value: 'neat', label: 'neat' }, { value: 'wow', label: 'wow' }],
+
 	    render: function () {
-	        return React.createElement(Select.Async, {
-	            name: 'from-select',
-	            loadOptions: this.handleChange
-	        });
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(Select.Async, {
+	                value: currentValue,
+	                name: 'from-select',
+	                loadOptions: this.handleChange
+	            })
+	        );
 	    }
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(163)))
@@ -29621,8 +29630,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../css-loader/index.js!./react-select.css", function() {
-				var newContent = require("!!./../../css-loader/index.js!./react-select.css");
+			module.hot.accept("!!./../../css-loader/index.js!./default.css", function() {
+				var newContent = require("!!./../../css-loader/index.js!./default.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -29640,7 +29649,7 @@
 
 
 	// module
-	exports.push([module.id, "/**\n * React Select\n * ============\n * Created by Jed Watson and Joss Mackison for KeystoneJS, http://www.keystonejs.com/\n * https://twitter.com/jedwatson https://twitter.com/jossmackison https://twitter.com/keystonejs\n * MIT License: https://github.com/keystonejs/react-select\n*/\n.Select {\n  position: relative;\n}\n.Select,\n.Select div,\n.Select input,\n.Select span {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.Select.is-disabled > .Select-control {\n  background-color: #f9f9f9;\n}\n.Select.is-disabled > .Select-control:hover {\n  box-shadow: none;\n}\n.Select.is-disabled .Select-arrow-zone {\n  cursor: default;\n  pointer-events: none;\n}\n.Select-control {\n  background-color: #fff;\n  border-color: #d9d9d9 #ccc #b3b3b3;\n  border-radius: 4px;\n  border: 1px solid #ccc;\n  color: #333;\n  cursor: default;\n  display: table;\n  height: 36px;\n  outline: none;\n  overflow: hidden;\n  position: relative;\n  width: 100%;\n}\n.Select-control:hover {\n  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);\n}\n.is-searchable.is-open > .Select-control {\n  cursor: text;\n}\n.is-open > .Select-control {\n  border-bottom-right-radius: 0;\n  border-bottom-left-radius: 0;\n  background: #fff;\n  border-color: #b3b3b3 #ccc #d9d9d9;\n}\n.is-open > .Select-control > .Select-arrow {\n  border-color: transparent transparent #999;\n  border-width: 0 5px 5px;\n}\n.is-searchable.is-focused:not(.is-open) > .Select-control {\n  cursor: text;\n}\n.is-focused:not(.is-open) > .Select-control {\n  border-color: #007eff;\n  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);\n}\n.Select-placeholder,\n:not(.Select--multi) > .Select-control .Select-value {\n  bottom: 0;\n  color: #aaa;\n  left: 0;\n  line-height: 34px;\n  padding-left: 10px;\n  padding-right: 10px;\n  position: absolute;\n  right: 0;\n  top: 0;\n  max-width: 100%;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.has-value:not(.Select--multi) > .Select-control > .Select-value .Select-value-label,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\n  color: #333;\n}\n.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label {\n  cursor: pointer;\n  text-decoration: none;\n}\n.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:hover,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:hover,\n.has-value:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:focus,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:focus {\n  color: #007eff;\n  outline: none;\n  text-decoration: underline;\n}\n.Select-input {\n  height: 34px;\n  padding-left: 10px;\n  padding-right: 10px;\n  vertical-align: middle;\n}\n.Select-input > input {\n  background: none transparent;\n  border: 0 none;\n  box-shadow: none;\n  cursor: default;\n  display: inline-block;\n  font-family: inherit;\n  font-size: inherit;\n  height: 34px;\n  margin: 0;\n  outline: none;\n  padding: 0;\n  -webkit-appearance: none;\n}\n.is-focused .Select-input > input {\n  cursor: text;\n}\n.has-value.is-pseudo-focused .Select-input {\n  opacity: 0;\n}\n.Select-control:not(.is-searchable) > .Select-input {\n  outline: none;\n}\n.Select-loading-zone {\n  cursor: pointer;\n  display: table-cell;\n  position: relative;\n  text-align: center;\n  vertical-align: middle;\n  width: 16px;\n}\n.Select-loading {\n  -webkit-animation: Select-animation-spin 400ms infinite linear;\n  -o-animation: Select-animation-spin 400ms infinite linear;\n  animation: Select-animation-spin 400ms infinite linear;\n  width: 16px;\n  height: 16px;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 2px solid #ccc;\n  border-right-color: #333;\n  display: inline-block;\n  position: relative;\n  vertical-align: middle;\n}\n.Select-clear-zone {\n  -webkit-animation: Select-animation-fadeIn 200ms;\n  -o-animation: Select-animation-fadeIn 200ms;\n  animation: Select-animation-fadeIn 200ms;\n  color: #999;\n  cursor: pointer;\n  display: table-cell;\n  position: relative;\n  text-align: center;\n  vertical-align: middle;\n  width: 17px;\n}\n.Select-clear-zone:hover {\n  color: #D0021B;\n}\n.Select-clear {\n  display: inline-block;\n  font-size: 18px;\n  line-height: 1;\n}\n.Select--multi .Select-clear-zone {\n  width: 17px;\n}\n.Select-arrow-zone {\n  cursor: pointer;\n  display: table-cell;\n  position: relative;\n  text-align: center;\n  vertical-align: middle;\n  width: 25px;\n  padding-right: 5px;\n}\n.Select-arrow {\n  border-color: #999 transparent transparent;\n  border-style: solid;\n  border-width: 5px 5px 2.5px;\n  display: inline-block;\n  height: 0;\n  width: 0;\n}\n.is-open .Select-arrow,\n.Select-arrow-zone:hover > .Select-arrow {\n  border-top-color: #666;\n}\n@-webkit-keyframes Select-animation-fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes Select-animation-fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n.Select-menu-outer {\n  border-bottom-right-radius: 4px;\n  border-bottom-left-radius: 4px;\n  background-color: #fff;\n  border: 1px solid #ccc;\n  border-top-color: #e6e6e6;\n  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);\n  box-sizing: border-box;\n  margin-top: -1px;\n  max-height: 200px;\n  position: absolute;\n  top: 100%;\n  width: 100%;\n  z-index: 1;\n  -webkit-overflow-scrolling: touch;\n}\n.Select-menu {\n  max-height: 198px;\n  overflow-y: auto;\n}\n.Select-option {\n  box-sizing: border-box;\n  background-color: #fff;\n  color: #666666;\n  cursor: pointer;\n  display: block;\n  padding: 8px 10px;\n}\n.Select-option:last-child {\n  border-bottom-right-radius: 4px;\n  border-bottom-left-radius: 4px;\n}\n.Select-option.is-focused {\n  background-color: rgba(0, 126, 255, 0.08);\n  color: #333;\n}\n.Select-option.is-disabled {\n  color: #cccccc;\n  cursor: default;\n}\n.Select-noresults {\n  box-sizing: border-box;\n  color: #999999;\n  cursor: default;\n  display: block;\n  padding: 8px 10px;\n}\n.Select--multi .Select-input {\n  vertical-align: middle;\n  margin-left: 10px;\n  padding: 0;\n}\n.Select--multi.has-value .Select-input {\n  margin-left: 5px;\n}\n.Select--multi .Select-value {\n  background-color: rgba(0, 126, 255, 0.08);\n  border-radius: 2px;\n  border: 1px solid rgba(0, 126, 255, 0.24);\n  color: #007eff;\n  display: inline-block;\n  font-size: 0.9em;\n  line-height: 1.4;\n  margin-left: 5px;\n  margin-top: 5px;\n  vertical-align: top;\n}\n.Select--multi .Select-value-icon,\n.Select--multi .Select-value-label {\n  display: inline-block;\n  vertical-align: middle;\n}\n.Select--multi .Select-value-label {\n  border-bottom-right-radius: 2px;\n  border-top-right-radius: 2px;\n  cursor: default;\n  padding: 2px 5px;\n}\n.Select--multi a.Select-value-label {\n  color: #007eff;\n  cursor: pointer;\n  text-decoration: none;\n}\n.Select--multi a.Select-value-label:hover {\n  text-decoration: underline;\n}\n.Select--multi .Select-value-icon {\n  cursor: pointer;\n  border-bottom-left-radius: 2px;\n  border-top-left-radius: 2px;\n  border-right: 1px solid rgba(0, 126, 255, 0.24);\n  padding: 1px 5px 3px;\n}\n.Select--multi .Select-value-icon:hover,\n.Select--multi .Select-value-icon:focus {\n  background-color: rgba(0, 113, 230, 0.08);\n  color: #0071e6;\n}\n.Select--multi .Select-value-icon:active {\n  background-color: rgba(0, 126, 255, 0.24);\n}\n.Select--multi.is-disabled .Select-value {\n  background-color: #fcfcfc;\n  border: 1px solid #e3e3e3;\n  color: #333;\n}\n.Select--multi.is-disabled .Select-value-icon {\n  cursor: not-allowed;\n  border-right: 1px solid #e3e3e3;\n}\n.Select--multi.is-disabled .Select-value-icon:hover,\n.Select--multi.is-disabled .Select-value-icon:focus,\n.Select--multi.is-disabled .Select-value-icon:active {\n  background-color: #fcfcfc;\n}\n@keyframes Select-animation-spin {\n  to {\n    transform: rotate(1turn);\n  }\n}\n@-webkit-keyframes Select-animation-spin {\n  to {\n    -webkit-transform: rotate(1turn);\n  }\n}\n", ""]);
+	exports.push([module.id, "/**\n * React Select\n * ============\n * Created by Jed Watson and Joss Mackison for KeystoneJS, http://www.keystonejs.com/\n * https://twitter.com/jedwatson https://twitter.com/jossmackison https://twitter.com/keystonejs\n * MIT License: https://github.com/keystonejs/react-select\n*/\n.Select {\n  position: relative;\n}\n.Select,\n.Select div,\n.Select input,\n.Select span {\n  -webkit-box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n}\n.Select.is-disabled > .Select-control {\n  background-color: #f9f9f9;\n}\n.Select.is-disabled > .Select-control:hover {\n  box-shadow: none;\n}\n.Select.is-disabled .Select-arrow-zone {\n  cursor: default;\n  pointer-events: none;\n}\n.Select-control {\n  background-color: #fff;\n  border-color: #d9d9d9 #ccc #b3b3b3;\n  border-radius: 4px;\n  border: 1px solid #ccc;\n  color: #333;\n  cursor: default;\n  display: table;\n  height: 36px;\n  outline: none;\n  overflow: hidden;\n  position: relative;\n  width: 100%;\n}\n.Select-control:hover {\n  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);\n}\n.is-searchable.is-open > .Select-control {\n  cursor: text;\n}\n.is-open > .Select-control {\n  border-bottom-right-radius: 0;\n  border-bottom-left-radius: 0;\n  background: #fff;\n  border-color: #b3b3b3 #ccc #d9d9d9;\n}\n.is-open > .Select-control > .Select-arrow {\n  border-color: transparent transparent #999;\n  border-width: 0 5px 5px;\n}\n.is-searchable.is-focused:not(.is-open) > .Select-control {\n  cursor: text;\n}\n.is-focused:not(.is-open) > .Select-control {\n  border-color: #08c #0099e6 #0099e6;\n  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 5px -1px rgba(0, 136, 204, 0.5);\n}\n.Select-placeholder,\n:not(.Select--multi) > .Select-control .Select-value {\n  bottom: 0;\n  color: #aaa;\n  left: 0;\n  line-height: 34px;\n  padding-left: 10px;\n  padding-right: 10px;\n  position: absolute;\n  right: 0;\n  top: 0;\n  max-width: 100%;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.has-value:not(.Select--multi):not(.is-focused) > .Select-control > .Select-value .Select-value-label,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value .Select-value-label {\n  color: #333;\n}\n.has-value:not(.Select--multi):not(.is-focused) > .Select-control > .Select-value a.Select-value-label,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label {\n  cursor: pointer;\n  text-decoration: none;\n}\n.has-value:not(.Select--multi):not(.is-focused) > .Select-control > .Select-value a.Select-value-label:hover,\n.has-value.is-pseudo-focused:not(.Select--multi) > .Select-control > .Select-value a.Select-value-label:hover {\n  color: #08c;\n  text-decoration: underline;\n}\n.Select-input {\n  height: 34px;\n  padding-left: 10px;\n  padding-right: 10px;\n  vertical-align: middle;\n}\n.Select-input > input {\n  background: none transparent;\n  border: 0 none;\n  box-shadow: none;\n  cursor: default;\n  display: inline-block;\n  font-family: inherit;\n  font-size: inherit;\n  height: 34px;\n  margin: 0;\n  outline: none;\n  padding: 0;\n  -webkit-appearance: none;\n}\n.is-focused .Select-input > input {\n  cursor: text;\n}\n.has-value.is-pseudo-focused .Select-input {\n  opacity: 0;\n}\n.Select-control:not(.is-searchable) > .Select-input {\n  outline: none;\n}\n.Select-loading-zone {\n  cursor: pointer;\n  display: table-cell;\n  position: relative;\n  text-align: center;\n  vertical-align: middle;\n  width: 16px;\n}\n.Select-loading {\n  -webkit-animation: Select-animation-spin 400ms infinite linear;\n  -o-animation: Select-animation-spin 400ms infinite linear;\n  animation: Select-animation-spin 400ms infinite linear;\n  width: 16px;\n  height: 16px;\n  box-sizing: border-box;\n  border-radius: 50%;\n  border: 2px solid #ccc;\n  border-right-color: #333;\n  display: inline-block;\n  position: relative;\n  vertical-align: middle;\n}\n.Select-clear-zone {\n  -webkit-animation: Select-animation-fadeIn 200ms;\n  -o-animation: Select-animation-fadeIn 200ms;\n  animation: Select-animation-fadeIn 200ms;\n  color: #999;\n  cursor: pointer;\n  display: table-cell;\n  position: relative;\n  text-align: center;\n  vertical-align: middle;\n  width: 17px;\n}\n.Select-clear-zone:hover {\n  color: #D0021B;\n}\n.Select-clear {\n  display: inline-block;\n  font-size: 18px;\n  line-height: 1;\n}\n.Select--multi .Select-clear-zone {\n  width: 17px;\n}\n.Select-arrow-zone {\n  cursor: pointer;\n  display: table-cell;\n  position: relative;\n  text-align: center;\n  vertical-align: middle;\n  width: 25px;\n  padding-right: 5px;\n}\n.Select-arrow {\n  border-color: #999 transparent transparent;\n  border-style: solid;\n  border-width: 5px 5px 2.5px;\n  display: inline-block;\n  height: 0;\n  width: 0;\n}\n.is-open .Select-arrow,\n.Select-arrow-zone:hover > .Select-arrow {\n  border-top-color: #666;\n}\n@-webkit-keyframes Select-animation-fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes Select-animation-fadeIn {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n.Select-menu-outer {\n  border-bottom-right-radius: 4px;\n  border-bottom-left-radius: 4px;\n  background-color: #fff;\n  border: 1px solid #ccc;\n  border-top-color: #e6e6e6;\n  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);\n  box-sizing: border-box;\n  margin-top: -1px;\n  max-height: 200px;\n  position: absolute;\n  top: 100%;\n  width: 100%;\n  z-index: 1000;\n  -webkit-overflow-scrolling: touch;\n}\n.Select-menu {\n  max-height: 198px;\n  overflow-y: auto;\n}\n.Select-option {\n  box-sizing: border-box;\n  color: #666666;\n  cursor: pointer;\n  display: block;\n  padding: 8px 10px;\n}\n.Select-option:last-child {\n  border-bottom-right-radius: 4px;\n  border-bottom-left-radius: 4px;\n}\n.Select-option.is-focused {\n  background-color: #f2f9fc;\n  color: #333;\n}\n.Select-option.is-disabled {\n  color: #cccccc;\n  cursor: default;\n}\n.Select-noresults {\n  box-sizing: border-box;\n  color: #999999;\n  cursor: default;\n  display: block;\n  padding: 8px 10px;\n}\n.Select--multi .Select-input {\n  vertical-align: middle;\n  margin-left: 10px;\n  padding: 0;\n}\n.Select--multi.has-value .Select-input {\n  margin-left: 5px;\n}\n.Select--multi .Select-value {\n  background-color: #f2f9fc;\n  border-radius: 2px;\n  border: 1px solid #c9e6f2;\n  color: #08c;\n  display: inline-block;\n  font-size: 0.9em;\n  margin-left: 5px;\n  margin-top: 5px;\n  vertical-align: top;\n}\n.Select--multi .Select-value-icon,\n.Select--multi .Select-value-label {\n  display: inline-block;\n  vertical-align: middle;\n}\n.Select--multi .Select-value-label {\n  border-bottom-right-radius: 2px;\n  border-top-right-radius: 2px;\n  cursor: default;\n  padding: 2px 5px;\n}\n.Select--multi a.Select-value-label {\n  color: #08c;\n  cursor: pointer;\n  text-decoration: none;\n}\n.Select--multi a.Select-value-label:hover {\n  text-decoration: underline;\n}\n.Select--multi .Select-value-icon {\n  cursor: pointer;\n  border-bottom-left-radius: 2px;\n  border-top-left-radius: 2px;\n  border-right: 1px solid #c9e6f2;\n  padding: 1px 5px 3px;\n}\n.Select--multi .Select-value-icon:hover,\n.Select--multi .Select-value-icon:focus {\n  background-color: #ddeff7;\n  color: #0077b3;\n}\n.Select--multi .Select-value-icon:active {\n  background-color: #c9e6f2;\n}\n.Select--multi.is-disabled .Select-value {\n  background-color: #fcfcfc;\n  border: 1px solid #e3e3e3;\n  color: #333;\n}\n.Select--multi.is-disabled .Select-value-icon {\n  cursor: not-allowed;\n  border-right: 1px solid #e3e3e3;\n}\n.Select--multi.is-disabled .Select-value-icon:hover,\n.Select--multi.is-disabled .Select-value-icon:focus,\n.Select--multi.is-disabled .Select-value-icon:active {\n  background-color: #fcfcfc;\n}\n@keyframes Select-animation-spin {\n  to {\n    transform: rotate(1turn);\n  }\n}\n@-webkit-keyframes Select-animation-spin {\n  to {\n    -webkit-transform: rotate(1turn);\n  }\n}\n", ""]);
 
 	// exports
 
@@ -30001,85 +30010,62 @@
 
 	var _Value2 = _interopRequireDefault(_Value);
 
-	function stringifyValue(value) {
-		if (typeof value === 'object') {
-			return JSON.stringify(value);
-		} else {
-			return value;
-		}
-	}
-
-	var stringOrNode = _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.node]);
-
 	var Select = _react2['default'].createClass({
+
+		statics: { Async: _Async2['default'] },
 
 		displayName: 'Select',
 
 		propTypes: {
 			addLabelText: _react2['default'].PropTypes.string, // placeholder displayed when you want to add a label on a multi-value input
 			allowCreate: _react2['default'].PropTypes.bool, // whether to allow creation of new entries
-			autoBlur: _react2['default'].PropTypes.bool,
-			autofocus: _react2['default'].PropTypes.bool, // autofocus the component on mount
 			backspaceRemoves: _react2['default'].PropTypes.bool, // whether backspace removes an item if there is no text input
 			className: _react2['default'].PropTypes.string, // className for the outer element
-			clearAllText: stringOrNode, // title for the "clear" control when multi: true
-			clearValueText: stringOrNode, // title for the "clear" control
+			clearAllText: _react2['default'].PropTypes.string, // title for the "clear" control when multi: true
+			clearValueText: _react2['default'].PropTypes.string, // title for the "clear" control
 			clearable: _react2['default'].PropTypes.bool, // should it be possible to reset value
 			delimiter: _react2['default'].PropTypes.string, // delimiter to use to join multiple values for the hidden field value
 			disabled: _react2['default'].PropTypes.bool, // whether the Select is disabled or not
 			escapeClearsValue: _react2['default'].PropTypes.bool, // whether escape clears the value when the menu is closed
-			filterOption: _react2['default'].PropTypes.func, // method to filter a single option (option, filterString)
+			filterOption: _react2['default'].PropTypes.func, // method to filter a single option  (option, filterString)
 			filterOptions: _react2['default'].PropTypes.any, // boolean to enable default filtering or function to filter the options array ([options], filterString, [values])
 			ignoreAccents: _react2['default'].PropTypes.bool, // whether to strip diacritics when filtering
 			ignoreCase: _react2['default'].PropTypes.bool, // whether to perform case-insensitive filtering
-			inputProps: _react2['default'].PropTypes.object, // custom attributes for the Input
+			inputProps: _react2['default'].PropTypes.object, // custom attributes for the Input (in the Select-control) e.g: {'data-foo': 'bar'}
 			isLoading: _react2['default'].PropTypes.bool, // whether the Select is loading externally or not (such as options being loaded)
 			labelKey: _react2['default'].PropTypes.string, // path of the label value in option objects
 			matchPos: _react2['default'].PropTypes.string, // (any|start) match the start or entire string when filtering
 			matchProp: _react2['default'].PropTypes.string, // (any|label|value) which option property to filter on
-			menuBuffer: _react2['default'].PropTypes.number, // optional buffer (in px) between the bottom of the viewport and the bottom of the menu
-			menuContainerStyle: _react2['default'].PropTypes.object, // optional style to apply to the menu container
-			menuStyle: _react2['default'].PropTypes.object, // optional style to apply to the menu
 			multi: _react2['default'].PropTypes.bool, // multi-value input
 			name: _react2['default'].PropTypes.string, // generates a hidden <input /> tag with this field name for html forms
 			newOptionCreator: _react2['default'].PropTypes.func, // factory to create new options when allowCreate set
-			noResultsText: stringOrNode, // placeholder displayed when there are no matching search results
+			noResultsText: _react2['default'].PropTypes.string, // placeholder displayed when there are no matching search results
 			onBlur: _react2['default'].PropTypes.func, // onBlur handler: function (event) {}
-			onBlurResetsInput: _react2['default'].PropTypes.bool, // whether input is cleared on blur
 			onChange: _react2['default'].PropTypes.func, // onChange handler: function (newValue) {}
-			onClose: _react2['default'].PropTypes.func, // fires when the menu is closed
 			onFocus: _react2['default'].PropTypes.func, // onFocus handler: function (event) {}
 			onInputChange: _react2['default'].PropTypes.func, // onInputChange handler: function (inputValue) {}
-			onMenuScrollToBottom: _react2['default'].PropTypes.func, // fires when the menu is scrolled to the bottom; can be used to paginate options
-			onOpen: _react2['default'].PropTypes.func, // fires when the menu is opened
 			onValueClick: _react2['default'].PropTypes.func, // onClick handler for value labels: function (value, event) {}
+			onMenuScrollToBottom: _react2['default'].PropTypes.func, // fires when the menu is scrolled to the bottom; can be used to paginate options
 			optionComponent: _react2['default'].PropTypes.func, // option component to render in dropdown
 			optionRenderer: _react2['default'].PropTypes.func, // optionRenderer: function (option) {}
 			options: _react2['default'].PropTypes.array, // array of options
-			placeholder: stringOrNode, // field placeholder, displayed when there's no value
-			required: _react2['default'].PropTypes.bool, // applies HTML5 required attribute when needed
-			scrollMenuIntoView: _react2['default'].PropTypes.bool, // boolean to enable the viewport to shift so that the full menu fully visible when engaged
+			placeholder: _react2['default'].PropTypes.string, // field placeholder, displayed when there's no value
 			searchable: _react2['default'].PropTypes.bool, // whether to enable searching feature or not
 			simpleValue: _react2['default'].PropTypes.bool, // pass the value to onChange as a simple value (legacy pre 1.0 mode), defaults to false
-			style: _react2['default'].PropTypes.object, // optional style to apply to the control
-			tabIndex: _react2['default'].PropTypes.string, // optional tab index of the control
 			value: _react2['default'].PropTypes.any, // initial field value
 			valueComponent: _react2['default'].PropTypes.func, // value component to render
 			valueKey: _react2['default'].PropTypes.string, // path of the label value in option objects
-			valueRenderer: _react2['default'].PropTypes.func, // valueRenderer: function (option) {}
-			wrapperStyle: _react2['default'].PropTypes.object },
-
-		// optional style to apply to the component wrapper
-		statics: { Async: _Async2['default'] },
+			valueRenderer: _react2['default'].PropTypes.func // valueRenderer: function (option) {}
+		},
 
 		getDefaultProps: function getDefaultProps() {
 			return {
 				addLabelText: 'Add "{label}"?',
 				allowCreate: false,
 				backspaceRemoves: true,
-				clearable: true,
 				clearAllText: 'Clear all',
 				clearValueText: 'Clear value',
+				clearable: true,
 				delimiter: ',',
 				disabled: false,
 				escapeClearsValue: true,
@@ -30091,14 +30077,10 @@
 				labelKey: 'label',
 				matchPos: 'any',
 				matchProp: 'any',
-				menuBuffer: 0,
 				multi: false,
 				noResultsText: 'No results found',
-				onBlurResetsInput: true,
 				optionComponent: _Option2['default'],
 				placeholder: 'Select...',
-				required: false,
-				scrollMenuIntoView: true,
 				searchable: true,
 				simpleValue: false,
 				valueComponent: _Value2['default'],
@@ -30112,35 +30094,11 @@
 				isFocused: false,
 				isLoading: false,
 				isOpen: false,
-				isPseudoFocused: false,
-				required: this.props.required && this.handleRequired(this.props.value, this.props.multi)
+				isPseudoFocused: false
 			};
 		},
 
-		componentDidMount: function componentDidMount() {
-			if (this.props.autofocus) {
-				this.focus();
-			}
-		},
-
-		componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
-			if (nextState.isOpen !== this.state.isOpen) {
-				var handler = nextState.isOpen ? nextProps.onOpen : nextProps.onClose;
-				handler && handler();
-			}
-		},
-
 		componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
-			// focus to the selected option
-			if (this.refs.menu && this.refs.focused && this.state.isOpen && !this.hasScrolledToOption) {
-				var focusedOptionNode = _reactDom2['default'].findDOMNode(this.refs.focused);
-				var menuNode = _reactDom2['default'].findDOMNode(this.refs.menu);
-				menuNode.scrollTop = focusedOptionNode.offsetTop;
-				this.hasScrolledToOption = true;
-			} else if (!this.state.isOpen) {
-				this.hasScrolledToOption = false;
-			}
-
 			if (prevState.inputValue !== this.state.inputValue && this.props.onInputChange) {
 				this.props.onInputChange(this.state.inputValue);
 			}
@@ -30154,53 +30112,11 @@
 					menuDOM.scrollTop = focusedDOM.offsetTop + focusedDOM.clientHeight - menuDOM.offsetHeight;
 				}
 			}
-			if (this.props.scrollMenuIntoView && this.refs.menuContainer) {
-				var menuContainerRect = this.refs.menuContainer.getBoundingClientRect();
-				if (window.innerHeight < menuContainerRect.bottom + this.props.menuBuffer) {
-					window.scrollTo(0, window.scrollY + menuContainerRect.bottom + this.props.menuBuffer - window.innerHeight);
-				}
-			}
-			if (prevProps.disabled !== this.props.disabled) {
-				this.setState({ isFocused: false }); // eslint-disable-line react/no-did-update-set-state
-			}
 		},
 
 		focus: function focus() {
 			if (!this.refs.input) return;
 			this.refs.input.focus();
-		},
-
-		blurInput: function blurInput() {
-			if (!this.refs.input) return;
-			this.refs.input.blur();
-		},
-
-		handleTouchMove: function handleTouchMove(event) {
-			// Set a flag that the view is being dragged
-			this.dragging = true;
-		},
-
-		handleTouchStart: function handleTouchStart(event) {
-			// Set a flag that the view is not being dragged
-			this.dragging = false;
-		},
-
-		handleTouchEnd: function handleTouchEnd(event) {
-			// Check if the view is being dragged, In this case
-			// we don't want to fire the click event (because the user only wants to scroll)
-			if (this.dragging) return;
-
-			// Fire the mouse events
-			this.handleMouseDown(event);
-		},
-
-		handleTouchEndClearValue: function handleTouchEndClearValue(event) {
-			// Check if the view is being dragged, In this case
-			// we don't want to fire the click event (because the user only wants to scroll)
-			if (this.dragging) return;
-
-			// Clear the value
-			this.clearValue(event);
 		},
 
 		handleMouseDown: function handleMouseDown(event) {
@@ -30214,12 +30130,12 @@
 			event.stopPropagation();
 			event.preventDefault();
 
-			// for the non-searchable select, toggle the menu
-			if (!this.props.searchable) {
-				this.focus();
-				return this.setState({
-					isOpen: !this.state.isOpen
+			// for the non-searchable select, close the dropdown when button is clicked
+			if (this.state.isOpen && !this.props.searchable) {
+				this.setState({
+					isOpen: false
 				});
+				return;
 			}
 
 			if (this.state.isFocused) {
@@ -30252,26 +30168,11 @@
 			this.closeMenu();
 		},
 
-		handleMouseDownOnMenu: function handleMouseDownOnMenu(event) {
-			// if the event was triggered by a mousedown and not the primary
-			// button, or if the component is disabled, ignore it.
-			if (this.props.disabled || event.type === 'mousedown' && event.button !== 0) {
-				return;
-			}
-			event.stopPropagation();
-			event.preventDefault();
-
-			this._openAfterFocus = true;
-			this.focus();
-		},
-
 		closeMenu: function closeMenu() {
 			this.setState({
 				isOpen: false,
-				isPseudoFocused: this.state.isFocused && !this.props.multi,
-				inputValue: ''
+				isPseudoFocused: this.state.isFocused && !this.props.multi
 			});
-			this.hasScrolledToOption = false;
 		},
 
 		handleInputFocus: function handleInputFocus(event) {
@@ -30287,22 +30188,18 @@
 		},
 
 		handleInputBlur: function handleInputBlur(event) {
-			if (this.refs.menu && document.activeElement.isEqualNode(this.refs.menu)) {
+			if (document.activeElement.isEqualNode(this.refs.menu)) {
 				return;
 			}
-
 			if (this.props.onBlur) {
 				this.props.onBlur(event);
 			}
-			var onBlurredState = {
+			this.setState({
+				inputValue: '',
 				isFocused: false,
 				isOpen: false,
 				isPseudoFocused: false
-			};
-			if (this.props.onBlurResetsInput) {
-				onBlurredState.inputValue = '';
-			}
-			this.setState(onBlurredState);
+			});
 		},
 
 		handleInputChange: function handleInputChange(event) {
@@ -30329,11 +30226,10 @@
 						return;
 					}
 					this.selectFocusedOption();
-					return;
+					break;
 				case 13:
 					// enter
 					if (!this.state.isOpen) return;
-					event.stopPropagation();
 					this.selectFocusedOption();
 					break;
 				case 27:
@@ -30381,11 +30277,6 @@
 			}
 		},
 
-		handleRequired: function handleRequired(value, multi) {
-			if (!value) return true;
-			return multi ? value.length === 0 : Object.keys(value).length === 0;
-		},
-
 		getOptionLabel: function getOptionLabel(op) {
 			return op[this.props.labelKey];
 		},
@@ -30395,7 +30286,7 @@
 			if (this.props.multi) {
 				if (typeof value === 'string') value = value.split(this.props.delimiter);
 				if (!Array.isArray(value)) {
-					if (value === null || value === undefined) return [];
+					if (!value) return [];
 					value = [value];
 				}
 				return value.map(this.expandValue).filter(function (i) {
@@ -30421,16 +30312,9 @@
 		setValue: function setValue(value) {
 			var _this = this;
 
-			if (this.props.autoBlur) {
-				this.blurInput();
-			}
 			if (!this.props.onChange) return;
-			if (this.props.required) {
-				var required = this.handleRequired(value, this.props.multi);
-				this.setState({ required: required });
-			}
 			if (this.props.simpleValue && value) {
-				value = this.props.multi ? value.map(function (i) {
+				value = this.props.multi ? value && value.map(function (i) {
 					return i[_this.props.valueKey];
 				}).join(this.props.delimiter) : value[this.props.valueKey];
 			}
@@ -30438,7 +30322,6 @@
 		},
 
 		selectValue: function selectValue(value) {
-			this.hasScrolledToOption = false;
 			if (this.props.multi) {
 				this.addValue(value);
 				this.setState({
@@ -30462,7 +30345,6 @@
 		popValue: function popValue() {
 			var valueArray = this.getValueArray();
 			if (!valueArray.length) return;
-			if (valueArray[valueArray.length - 1].clearableValue === false) return;
 			this.setValue(valueArray.slice(0, valueArray.length - 1));
 		},
 
@@ -30571,17 +30453,17 @@
 			}
 			var onClick = this.props.onValueClick ? this.handleValueClick : null;
 			if (this.props.multi) {
-				return valueArray.map(function (value, i) {
+				return valueArray.map(function (i) {
 					return _react2['default'].createElement(
 						ValueComponent,
 						{
-							disabled: _this2.props.disabled || value.clearableValue === false,
-							key: 'value-' + i + '-' + value[_this2.props.valueKey],
+							disabled: _this2.props.disabled,
+							key: i[_this2.props.valueKey],
 							onClick: onClick,
 							onRemove: _this2.removeValue,
-							value: value
+							value: i
 						},
-						renderLabel(value)
+						renderLabel(i)
 					);
 				});
 			} else if (!this.state.inputValue) {
@@ -30601,13 +30483,12 @@
 		renderInput: function renderInput(valueArray) {
 			var className = (0, _classnames2['default'])('Select-input', this.props.inputProps.className);
 			if (this.props.disabled || !this.props.searchable) {
-				return _react2['default'].createElement('div', _extends({}, this.props.inputProps, {
-					className: className,
-					tabIndex: this.props.tabIndex || 0,
-					onBlur: this.handleInputBlur,
-					onFocus: this.handleInputFocus,
-					ref: 'input',
-					style: { border: 0, width: 1, display: 'inline-block' } }));
+				if (this.props.multi && valueArray.length) return;
+				return _react2['default'].createElement(
+					'div',
+					{ className: className },
+					' '
+				);
 			}
 			return _react2['default'].createElement(_reactInputAutosize2['default'], _extends({}, this.props.inputProps, {
 				className: className,
@@ -30617,7 +30498,6 @@
 				onFocus: this.handleInputFocus,
 				minWidth: '5',
 				ref: 'input',
-				required: this.state.required,
 				value: this.state.inputValue
 			}));
 		},
@@ -30626,12 +30506,7 @@
 			if (!this.props.clearable || !this.props.value || this.props.multi && !this.props.value.length || this.props.disabled || this.props.isLoading) return;
 			return _react2['default'].createElement(
 				'span',
-				{ className: 'Select-clear-zone', title: this.props.multi ? this.props.clearAllText : this.props.clearValueText,
-					'aria-label': this.props.multi ? this.props.clearAllText : this.props.clearValueText,
-					onMouseDown: this.clearValue,
-					onTouchStart: this.handleTouchStart,
-					onTouchMove: this.handleTouchMove,
-					onTouchEnd: this.handleTouchEndClearValue },
+				{ className: 'Select-clear-zone', title: this.props.multi ? this.props.clearAllText : this.props.clearValueText, 'aria-label': this.props.multi ? this.props.clearAllText : this.props.clearValueText, onMouseDown: this.clearValue, onTouchEnd: this.clearValue },
 				_react2['default'].createElement('span', { className: 'Select-clear', dangerouslySetInnerHTML: { __html: '&times;' } })
 			);
 		},
@@ -30689,9 +30564,8 @@
 				var _ret = (function () {
 					var Option = _this4.props.optionComponent;
 					var renderLabel = _this4.props.optionRenderer || _this4.getOptionLabel;
-
 					return {
-						v: options.map(function (option, i) {
+						v: options.map(function (option) {
 							var isSelected = valueArray && valueArray.indexOf(option) > -1;
 							var isFocused = option === focusedOption;
 							var optionRef = isFocused ? 'focused' : null;
@@ -30701,14 +30575,13 @@
 								'is-focused': isFocused,
 								'is-disabled': option.disabled
 							});
-
 							return _react2['default'].createElement(
 								Option,
 								{
 									className: optionClass,
 									isDisabled: option.disabled,
 									isFocused: isFocused,
-									key: 'option-' + i + '-' + option[_this4.props.valueKey],
+									key: 'option-' + option[_this4.props.valueKey],
 									onSelect: _this4.selectValue,
 									onFocus: _this4.focusOption,
 									option: option,
@@ -30722,24 +30595,18 @@
 				})();
 
 				if (typeof _ret === 'object') return _ret.v;
-			} else if (this.props.noResultsText) {
+			} else {
 				return _react2['default'].createElement(
 					'div',
 					{ className: 'Select-noresults' },
 					this.props.noResultsText
 				);
-			} else {
-				return null;
 			}
 		},
 
 		renderHiddenField: function renderHiddenField(valueArray) {
-			var _this5 = this;
-
 			if (!this.props.name) return;
-			var value = valueArray.map(function (i) {
-				return stringifyValue(i[_this5.props.valueKey]);
-			}).join(this.props.delimiter);
+			var value = valueArray.join(this.props.delimiter);
 			return _react2['default'].createElement('input', { type: 'hidden', ref: 'value', name: this.props.name, value: value, disabled: this.props.disabled });
 		},
 
@@ -30771,18 +30638,11 @@
 			});
 			return _react2['default'].createElement(
 				'div',
-				{ ref: 'wrapper', className: className, style: this.props.wrapperStyle },
+				{ ref: 'wrapper', className: className },
 				this.renderHiddenField(valueArray),
 				_react2['default'].createElement(
 					'div',
-					{ ref: 'control',
-						className: 'Select-control',
-						style: this.props.style,
-						onKeyDown: this.handleKeyDown,
-						onMouseDown: this.handleMouseDown,
-						onTouchEnd: this.handleTouchEnd,
-						onTouchStart: this.handleTouchStart,
-						onTouchMove: this.handleTouchMove },
+					{ className: 'Select-control', ref: 'control', onKeyDown: this.handleKeyDown, onMouseDown: this.handleMouseDown, onTouchEnd: this.handleMouseDown },
 					this.renderValue(valueArray, isOpen),
 					this.renderInput(valueArray),
 					this.renderLoading(),
@@ -30791,13 +30651,10 @@
 				),
 				isOpen ? _react2['default'].createElement(
 					'div',
-					{ ref: 'menuContainer', className: 'Select-menu-outer', style: this.props.menuContainerStyle },
+					{ ref: 'menuContainer', className: 'Select-menu-outer' },
 					_react2['default'].createElement(
 						'div',
-						{ ref: 'menu', className: 'Select-menu',
-							style: this.props.menuStyle,
-							onScroll: this.handleMenuScroll,
-							onMouseDown: this.handleMouseDownOnMenu },
+						{ ref: 'menu', className: 'Select-menu', onScroll: this.handleMenuScroll, onMouseDown: this.handleMouseDownOnMenu },
 						this.renderMenu(options, !this.props.multi ? valueArray : null, focusedOption)
 					)
 				) : null
@@ -31043,41 +30900,39 @@
 
 	function getFromCache(cache, input) {
 		if (!cache) return;
-		for (var i = input.length; i >= 0; --i) {
+		for (var i = 0; i <= input.length; i++) {
 			var cacheKey = input.slice(0, i);
 			if (cache[cacheKey] && (input === cacheKey || cache[cacheKey].complete)) {
-				return cache[cacheKey];
+				return cache[cacheKey].options;
 			}
 		}
 	}
 
 	function thenPromise(promise, callback) {
 		if (!promise || typeof promise.then !== 'function') return;
-		return promise.then(function (data) {
+		promise.then(function (data) {
 			callback(null, data);
 		}, function (err) {
 			callback(err);
 		});
 	}
 
-	var stringOrNode = _react2['default'].PropTypes.oneOfType([_react2['default'].PropTypes.string, _react2['default'].PropTypes.node]);
-
 	var Async = _react2['default'].createClass({
 		displayName: 'Async',
 
 		propTypes: {
 			cache: _react2['default'].PropTypes.any, // object to use to cache results, can be null to disable cache
+			loadOptions: _react2['default'].PropTypes.func.isRequired, // function to call to load options asynchronously
 			ignoreAccents: _react2['default'].PropTypes.bool, // whether to strip diacritics when filtering (shared with Select)
 			ignoreCase: _react2['default'].PropTypes.bool, // whether to perform case-insensitive filtering (shared with Select)
 			isLoading: _react2['default'].PropTypes.bool, // overrides the isLoading state when set to true
-			loadOptions: _react2['default'].PropTypes.func.isRequired, // function to call to load options asynchronously
 			loadingPlaceholder: _react2['default'].PropTypes.string, // replaces the placeholder while options are loading
 			minimumInput: _react2['default'].PropTypes.number, // the minimum number of characters that trigger loadOptions
 			noResultsText: _react2['default'].PropTypes.string, // placeholder displayed when there are no matching search results (shared with Select)
-			placeholder: stringOrNode, // field placeholder, displayed when there's no value (shared with Select)
-			searchPromptText: _react2['default'].PropTypes.string, // label to prompt for search input
-			searchingText: _react2['default'].PropTypes.string },
-		// message to display while options are loading
+			placeholder: _react2['default'].PropTypes.string, // field placeholder, displayed when there's no value (shared with Select)
+			searchingText: _react2['default'].PropTypes.string, // message to display while options are loading
+			searchPromptText: _react2['default'].PropTypes.string },
+		// label to prompt for search input
 		getDefaultProps: function getDefaultProps() {
 			return {
 				cache: true,
@@ -31108,9 +30963,6 @@
 					cache: initCache(nextProps.cache)
 				});
 			}
-		},
-		focus: function focus() {
-			this.refs.select.focus();
 		},
 		resetState: function resetState() {
 			this._currentRequestId = -1;
@@ -31150,8 +31002,8 @@
 			this.setState({
 				isLoading: true
 			});
-			var responseHandler = this.getResponseHandler(input);
-			return thenPromise(this.props.loadOptions(input, responseHandler), responseHandler);
+			var responseHandler = this.getResponseHandler();
+			thenPromise(this.props.loadOptions(input, responseHandler), responseHandler);
 		},
 		render: function render() {
 			var noResultsText = this.props.noResultsText;
@@ -31166,7 +31018,6 @@
 				if (isLoading) noResultsText = this.props.searchingText;
 			}
 			return _react2['default'].createElement(_Select2['default'], _extends({}, this.props, {
-				ref: 'select',
 				isLoading: isLoading,
 				noResultsText: noResultsText,
 				onInputChange: this.loadOptions,
@@ -31198,13 +31049,12 @@
 		displayName: 'Option',
 
 		propTypes: {
-			children: _react2['default'].PropTypes.node,
 			className: _react2['default'].PropTypes.string, // className (based on mouse position)
 			isDisabled: _react2['default'].PropTypes.bool, // the option is disabled
 			isFocused: _react2['default'].PropTypes.bool, // the option is focused
 			isSelected: _react2['default'].PropTypes.bool, // the option is selected
-			onFocus: _react2['default'].PropTypes.func, // method to handle mouseEnter on option element
 			onSelect: _react2['default'].PropTypes.func, // method to handle click on option element
+			onFocus: _react2['default'].PropTypes.func, // method to handle mouseEnter on option element
 			onUnfocus: _react2['default'].PropTypes.func, // method to handle mouseLeave on option element
 			option: _react2['default'].PropTypes.object.isRequired },
 		// object that is base for that option
@@ -31220,43 +31070,17 @@
 				window.location.href = event.target.href;
 			}
 		},
-
 		handleMouseDown: function handleMouseDown(event) {
 			event.preventDefault();
 			event.stopPropagation();
 			this.props.onSelect(this.props.option, event);
 		},
-
 		handleMouseEnter: function handleMouseEnter(event) {
-			this.onFocus(event);
+			this.props.onFocus(this.props.option, event);
 		},
-
 		handleMouseMove: function handleMouseMove(event) {
-			this.onFocus(event);
-		},
-
-		handleTouchEnd: function handleTouchEnd(event) {
-			// Check if the view is being dragged, In this case
-			// we don't want to fire the click event (because the user only wants to scroll)
-			if (this.dragging) return;
-
-			this.handleMouseDown(event);
-		},
-
-		handleTouchMove: function handleTouchMove(event) {
-			// Set a flag that the view is being dragged
-			this.dragging = true;
-		},
-
-		handleTouchStart: function handleTouchStart(event) {
-			// Set a flag that the view is not being dragged
-			this.dragging = false;
-		},
-
-		onFocus: function onFocus(event) {
-			if (!this.props.isFocused) {
-				this.props.onFocus(this.props.option, event);
-			}
+			if (this.props.focused) return;
+			this.props.onFocus(this.props.option, event);
 		},
 		render: function render() {
 			var option = this.props.option;
@@ -31276,9 +31100,6 @@
 					onMouseDown: this.handleMouseDown,
 					onMouseEnter: this.handleMouseEnter,
 					onMouseMove: this.handleMouseMove,
-					onTouchStart: this.handleTouchStart,
-					onTouchMove: this.handleTouchMove,
-					onTouchEnd: this.handleTouchEnd,
 					title: option.title },
 				this.props.children
 			);
@@ -31308,7 +31129,6 @@
 		displayName: 'Value',
 
 		propTypes: {
-			children: _react2['default'].PropTypes.node,
 			disabled: _react2['default'].PropTypes.bool, // disabled prop passed to ReactSelect
 			onClick: _react2['default'].PropTypes.func, // method to handle click on value label
 			onRemove: _react2['default'].PropTypes.func, // method to handle removal of the value
@@ -31335,34 +31155,13 @@
 			this.props.onRemove(this.props.value);
 		},
 
-		handleTouchEndRemove: function handleTouchEndRemove(event) {
-			// Check if the view is being dragged, In this case
-			// we don't want to fire the click event (because the user only wants to scroll)
-			if (this.dragging) return;
-
-			// Fire the mouse events
-			this.onRemove(event);
-		},
-
-		handleTouchMove: function handleTouchMove(event) {
-			// Set a flag that the view is being dragged
-			this.dragging = true;
-		},
-
-		handleTouchStart: function handleTouchStart(event) {
-			// Set a flag that the view is not being dragged
-			this.dragging = false;
-		},
-
 		renderRemoveIcon: function renderRemoveIcon() {
 			if (this.props.disabled || !this.props.onRemove) return;
 			return _react2['default'].createElement(
 				'span',
 				{ className: 'Select-value-icon',
 					onMouseDown: this.onRemove,
-					onTouchEnd: this.handleTouchEndRemove,
-					onTouchStart: this.handleTouchStart,
-					onTouchMove: this.handleTouchMove },
+					onTouchEnd: this.onRemove },
 				'×'
 			);
 		},
@@ -31371,7 +31170,7 @@
 			var className = 'Select-value-label';
 			return this.props.onClick || this.props.value.href ? _react2['default'].createElement(
 				'a',
-				{ className: className, href: this.props.value.href, target: this.props.value.target, onMouseDown: this.handleMouseDown, onTouchEnd: this.handleMouseDown },
+				{ className: className, href: this.props.value.href, target: this.props.value.target, onMouseDown: this.handleMouseDown, onTouchEnd: this.props.handleMouseDown },
 				this.props.children
 			) : _react2['default'].createElement(
 				'span',

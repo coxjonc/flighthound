@@ -24,7 +24,7 @@
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-input-autosize": "^0.6.9",
-    "react-select": "^1.0.0-beta11",
+    "react-select": "^1.0.0-beta1",
     "webpack": "^1.12.14"
   }
 }

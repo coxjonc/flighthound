@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 
 from rest_framework import viewsets
+from rest_framework import filters
 
 from .serializers import UserSerializer, AirportSerializer, FlightSerializer
 from .models import Flight, Airport
@@ -25,4 +26,5 @@ class AirportViewSet(viewsets.ModelViewSet):
     """
     serializer_class = AirportSerializer
     queryset = Airport.objects.all()
+    filter_backends = (filters.SearchFilter,)
     search_fields = ('city',)

@@ -24,14 +24,20 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #third-party apps
     'rest_framework',
     'django_extensions',
+    'allauth',
+    'allauth.account',
     #internal apps
     'api',
+    'frontend'
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -49,7 +55,7 @@ ROOT_URLCONF = 'flighthound.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -61,6 +67,24 @@ TEMPLATES = [
         },
     },
 ]
+
+# Allauth settings
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBacken'
+)
+
+ACCOUNT_FORMS = {
+    'signup':'frontend.forms.SignupForm'
+}
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+LOGIN_REDIRECT_URL = '/app/'
+
+
+#WSGI
 
 WSGI_APPLICATION = 'flighthound.wsgi.application'
 

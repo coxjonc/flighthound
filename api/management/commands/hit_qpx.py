@@ -22,7 +22,8 @@ class Command(BaseCommand):
                         'destination': 'LAX',
                         'date': '2016-04-13'
                     }    
-                ]
+                ],
+                'solutions': '1'
             }
         }
 
@@ -33,5 +34,6 @@ class Command(BaseCommand):
             headers = {'Content-Type': 'application/json'},
             data = json.dumps(req)
         )
-        with open('qpx.txt', 'w') as f:
-            f.write(r.text)
+        data = json.loads(r.text)
+        price = data['trips']['tripOption'][0]['saleTotal']
+        

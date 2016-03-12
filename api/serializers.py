@@ -14,7 +14,7 @@ class FlightSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Flight
-        fields = ('url', 'user', 'origin_name', 'origin_iata', 'destination_name', 'destination_iata',
+        fields = ('url', 'user', 'origin_city', 'max_price', 'origin_iata', 'destination_city', 'destination_iata',
             'depart_date', 'return_date', 'round_trip', 'created_at', 'updated_at')
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

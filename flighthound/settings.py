@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #third-party apps
     'rest_framework',
+    'rest_framework.authtoken',
     'django_extensions',
     'allauth',
     'allauth.account',
@@ -68,11 +69,11 @@ TEMPLATES = [
     },
 ]
 
-# Allauth settings
+# Allauth
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBacken'
+    'allauth.account.auth_backends.AuthenticationBackend'
 )
 
 ACCOUNT_FORMS = {
@@ -83,12 +84,19 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 LOGIN_REDIRECT_URL = '/app/'
 
+#Rest Framework
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )        
+}
 
 #WSGI
 
 WSGI_APPLICATION = 'flighthound.wsgi.application'
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 

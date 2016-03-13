@@ -19655,158 +19655,58 @@
 /* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var React = __webpack_require__(1);
-	var FlightCreate = __webpack_require__(160);
-	var FlightList = __webpack_require__(161);
-
-	module.exports = React.createClass({
-	    displayName: 'exports',
-
-	    render: function () {
-	        return React.createElement(
-	            'div',
-	            null,
-	            React.createElement(FlightCreate, null)
-	        );
-	    }
-	});
-
-/***/ },
-/* 160 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/* WEBPACK VAR INJECTION */(function($) {var React = __webpack_require__(1);
-	var TypeInput = __webpack_require__(163);
-	var FromSelect = __webpack_require__(164);
-	var ToSelect = __webpack_require__(165);
+	var FlightCreate = __webpack_require__(161);
+	var FlightList = __webpack_require__(165);
 
 	module.exports = React.createClass({
 	    displayName: 'exports',
 
-	    getInitialState: function () {
-	        return {
-	            origin_iata: '',
-	            destination_iata: '',
-	            max_price: 0
-	        };
-	    },
-
-	    handleFromChange: function (e) {
-	        this.setState({ origin: e.target.value });
-	    },
-
-	    handleToChange: function (e) {
-	        this.setState({ destination: e.target.value });
-	    },
-
-	    handlePriceChange: function (e) {
-	        this.setState({ max_price: e.target.value });
-	    },
-
-	    handleSubmit: function (e) {
-	        e.preventDefault();
-	        formData = {
-	            origin_iata: this.state.origin,
-	            destination_iata: this.state.destination,
-	            max_price: this.state.max_price
-	        };
+	    getToken: function () {
 	        $.ajax({
 	            type: 'POST',
-	            url: '/flights/',
-	            data: JSON.stringify(formData),
-	            success: function () {
-	                alert('request sent');
-	            }.bind(this),
-	            datatype: 'json',
-	            contentType: 'application/json'
+	            url: '/api/api-token-auth/',
+	            data: 'username=test&password=test',
+	            success: function (data) {
+	                this.setState({ token: 'Token ' + data.token });
+	            }.bind(this)
 	        });
 	    },
 
-	    render: function () {
-	        return React.createElement(
-	            'form',
-	            { className: 'foo', onSubmit: this.handleSubmit },
-	            React.createElement(
-	                'table',
-	                null,
-	                React.createElement(
-	                    'tr',
-	                    null,
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        React.createElement(TypeInput, null)
-	                    )
-	                ),
-	                React.createElement(
-	                    'tr',
-	                    null,
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        'From: '
-	                    ),
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        React.createElement('input', { type: 'text', onChange: this.handleFromChange })
-	                    )
-	                ),
-	                React.createElement(
-	                    'tr',
-	                    null,
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        'To: '
-	                    ),
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        React.createElement('input', { type: 'text', onChange: this.handleToChange })
-	                    )
-	                ),
-	                React.createElement(
-	                    'tr',
-	                    null,
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        'Max price: '
-	                    ),
-	                    React.createElement(
-	                        'td',
-	                        null,
-	                        React.createElement('input', { type: 'text', onChange: this.handlePriceChange })
-	                    )
-	                )
-	            ),
-	            React.createElement('input', { type: 'submit' })
-	        );
-	    }
-	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(162)))
+	    loadUsernameFromServer: function () {
+	        $.ajax({
+	            type: 'GET',
+	            url: '/api/users/1/',
+	            datatype: 'json',
+	            headers: { 'Authorization': this.state.token },
+	            success: function (data) {
+	                this.setState({ username: data.username });
+	            }.bind(this)
+	        });
+	    },
 
-/***/ },
-/* 161 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-
-	module.exports = React.createClass({
-	    displayName: 'exports',
-
+	    getInitialState: function () {
+	        return { username: '', token: '' };
+	    },
+	    componentDidMount: function () {
+	        var that = this;
+	        this.getToken();
+	        setTimeout(function () {
+	            that.loadUsernameFromServer();
+	        }, 500);
+	    },
 	    render: function () {
 	        return React.createElement(
 	            'div',
 	            null,
-	            'Flight list'
+	            React.createElement(FlightList, { username: this.state.username })
 	        );
 	    }
 	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(160)))
 
 /***/ },
-/* 162 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -29643,7 +29543,123 @@
 
 
 /***/ },
-/* 163 */
+/* 161 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {var React = __webpack_require__(1);
+	var TypeInput = __webpack_require__(162);
+	var FromSelect = __webpack_require__(163);
+	var ToSelect = __webpack_require__(164);
+
+	module.exports = React.createClass({
+	    displayName: 'exports',
+
+	    getInitialState: function () {
+	        return {
+	            origin_iata: '',
+	            destination_iata: '',
+	            max_price: 0
+	        };
+	    },
+
+	    handleFromChange: function (e) {
+	        this.setState({ origin: e.target.value });
+	    },
+
+	    handleToChange: function (e) {
+	        this.setState({ destination: e.target.value });
+	    },
+
+	    handlePriceChange: function (e) {
+	        this.setState({ max_price: e.target.value });
+	    },
+
+	    handleSubmit: function (e) {
+	        e.preventDefault();
+	        formData = {
+	            origin_iata: this.state.origin,
+	            destination_iata: this.state.destination,
+	            max_price: this.state.max_price
+	        };
+	        $.ajax({
+	            type: 'POST',
+	            url: '/flights/',
+	            data: JSON.stringify(formData),
+	            success: function () {
+	                alert('request sent');
+	            }.bind(this),
+	            datatype: 'json',
+	            contentType: 'application/json'
+	        });
+	    },
+
+	    render: function () {
+	        return React.createElement(
+	            'form',
+	            { className: 'foo', onSubmit: this.handleSubmit },
+	            React.createElement(
+	                'table',
+	                null,
+	                React.createElement(
+	                    'tr',
+	                    null,
+	                    React.createElement(
+	                        'td',
+	                        null,
+	                        React.createElement(TypeInput, null)
+	                    )
+	                ),
+	                React.createElement(
+	                    'tr',
+	                    null,
+	                    React.createElement(
+	                        'td',
+	                        null,
+	                        'From: '
+	                    ),
+	                    React.createElement(
+	                        'td',
+	                        null,
+	                        React.createElement('input', { type: 'text', onChange: this.handleFromChange })
+	                    )
+	                ),
+	                React.createElement(
+	                    'tr',
+	                    null,
+	                    React.createElement(
+	                        'td',
+	                        null,
+	                        'To: '
+	                    ),
+	                    React.createElement(
+	                        'td',
+	                        null,
+	                        React.createElement('input', { type: 'text', onChange: this.handleToChange })
+	                    )
+	                ),
+	                React.createElement(
+	                    'tr',
+	                    null,
+	                    React.createElement(
+	                        'td',
+	                        null,
+	                        'Max price: '
+	                    ),
+	                    React.createElement(
+	                        'td',
+	                        null,
+	                        React.createElement('input', { type: 'text', onChange: this.handlePriceChange })
+	                    )
+	                )
+	            ),
+	            React.createElement('input', { type: 'submit' })
+	        );
+	    }
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(160)))
+
+/***/ },
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -29674,6 +29690,20 @@
 	});
 
 /***/ },
+/* 163 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+
+	module.exports = React.createClass({
+	    displayName: "exports",
+
+	    render: function () {
+	        return React.createElement("input", { type: "text" });
+	    }
+	});
+
+/***/ },
 /* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -29694,10 +29724,14 @@
 	var React = __webpack_require__(1);
 
 	module.exports = React.createClass({
-	    displayName: "exports",
+	    displayName: 'exports',
 
 	    render: function () {
-	        return React.createElement("input", { type: "text" });
+	        return React.createElement(
+	            'div',
+	            null,
+	            this.props.username
+	        );
 	    }
 	});
 

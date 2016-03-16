@@ -47,6 +47,7 @@ module.exports = React.createClass({
         return (
             <form className="foo" onSubmit={this.handleSubmit}>
             <table>
+            <tbody>
                 <tr>
                     <td><TypeInput /></td>
                 </tr>
@@ -62,6 +63,7 @@ module.exports = React.createClass({
                     <td>Max price: </td>
                     <td><input type="text" onChange={this.handlePriceChange}/></td>
                 </tr>
+            </tbody>
             </table>
             <input type="submit" />
             </form>

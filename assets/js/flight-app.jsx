@@ -1,38 +1,48 @@
 var React = require('react')
-var FlightCreate = require('./flight-create')
-var FlightList = require('./flight-list')
+var ReactDOM = require('react-dom')
+var Router = require('react-router')
+var Dashboard = require('./dashboard')
+var Login = require('./login')
+var auth = require('./auth')
 
-module.exports = React.createClass({
+var FlightApp = React.createClass({
     
-    loadUserData: function() {
-        $.ajax({
-            type: 'GET',
-            url: '/api/users/1/',
-            datatype: 'json',
-            headers: {'Authorization': 'Token ' + localStorage.flighthound_token},
-            success: function(res) {
-                this.setState({username: res.username})
-            }.bind(this)
-        })
-    },
-
     getInitialState: function() {
         return {
-            username: ''
+            loggedIn: auth.loggedIn()
         }
     },
-
-    componentWillMount: function() {
-        this.loadUserData()
+    
+    updateAuth: function(loggedIn) {
+        this.setState({
+            loggedIn: loggedIn
+        })
     },
 
     render: function() {
         return (
             <div>
-                <FlightCreate />
-                <FlightList />
+                {this.props.children}
             </div>
         )
     }
 })
 
+function requireAuth(nextState, replace) {
+    if (!auth.loggedIn()) {
+        replace({ 
+            pathname:'/login/',
+            state: {nextPathname: '/dashboard/'}
+        })
+    }
+}
+
+ReactDOM.render(
+    <Router.Router history={Router.browserHistory}>
+        <Router.Route path='/' component={FlightApp}>
+            <Router.Route path='login/' component={Login} />
+            <Router.Route path='dashboard/' component={Dashboard} onEnter={requireAuth} />
+        </Router.Route>
+    </Router.Router>,
+    document.getElementById('app')    
+)

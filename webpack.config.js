@@ -4,7 +4,7 @@ var webpack = require('webpack')
 module.exports = {
     context: __dirname,
     
-    entry: './assets/js/index',
+    entry: './assets/js/flight-app',
     
     output: {
         path: path.resolve('./assets/bundles'),
@@ -26,13 +26,9 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {
-                    presets: ['react']
+                    presets: ['react', 'es2016']
                 }
             },
-            {
-                test: /\.css$/,
-                loader: 'style-loader!css-loader'
-            }
         ]
     },
 

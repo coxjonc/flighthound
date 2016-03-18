@@ -5,21 +5,25 @@ var auth = require('./auth')
 
 module.exports = React.createClass({
 
+    contextTypes: {
+        router: React.PropTypes.object.isRequired
+    },
+
+    logoutHandler: function() {
+        auth.logout()
+        this.context.router.replace('/login/')
+    },
+    
     loadUserData: function() {
         $.ajax({
             type: 'GET',
-            url: '/api/users/1/',
+            url: '/api/users/i/',
             datatype: 'json',
             headers: {'Authorization': 'Token ' + localStorage.flighthound_token},
             success: function(res) {
-                this.setState({data: res})
+                this.setState({user: res})
             }.bind(this)
         })
-    },
-    
-    logOutHandler: function() {
-        auth.logout()  
-        this.
     },
 
     getInitialState: function() {
@@ -34,8 +38,9 @@ module.exports = React.createClass({
         return (
             <div>
                 <FlightCreate />
+                <h2>Your flight alerts</h2>
                 <FlightList user={this.state.user} />
-                <p className="logout" onClick={this.logOutHandler}>Log out</p>
+                <button className="logout" onClick={this.logoutHandler}>Log out</button>
             </div>
         )
     }

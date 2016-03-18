@@ -9,6 +9,7 @@ module.exports = {
         }
         this.getToken(username, pass, (res) => {
             if (res.authenticated) {
+                debugger
                 localStorage.flighthound_token = res.token
                 if (cb) cb(true)
                 this.onChange(true)
@@ -37,8 +38,11 @@ module.exports = {
                 username: username,
                 password: pass
             },
-            success: function(){
-                cb({authenticated: true})
+            success: function(res){
+                cb({
+                    authenticated: true,
+                    token: res.token
+                })
             }.bind(this)
         })
     }, 

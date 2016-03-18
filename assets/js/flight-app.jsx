@@ -19,6 +19,10 @@ var FlightApp = React.createClass({
         })
     },
 
+    componentDidMount: function() {
+        auth.onChange = this.updateAuth
+    },
+
     render: function() {
         return (
             <div>

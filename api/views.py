@@ -1,22 +1,12 @@
 from django.contrib.auth.models import User
 
-from rest_framework import viewsets, filters, authentication, permissions
+from rest_framework import viewsets, filters, authentication, permissions, response
 
 from .serializers import UserSerializer, AirportSerializer, FlightSerializer
 from .models import Flight, Airport
 
-class DefaultsMixin(object):
-    """
-    Default settings for authentication and permissions
-    """
-    authentication_classes = (
-        authentication.TokenAuthentication,
-    )
-    permission_classes = (
-        permissions.IsAuthenticated,
-    )
 
-class UserViewSet(DefaultsMixin, viewsets.ModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     """
     A viewset for listing or retrieving users
     """
@@ -28,17 +18,21 @@ class UserViewSet(DefaultsMixin, viewsets.ModelViewSet):
         If provided pk is 'i', then return the current User
         """
         if pk == 'i':
-            return Response(UserSerializer(request.user).data)
+            return response.Response(UserSerializer(request.user,
+                context={'request':request}).data)
         return super(UserViewSet, self).retrieve(request, pk)
 
-class FlightViewSet(DefaultsMixin, viewsets.ModelViewSet):
+class FlightViewSet(viewsets.ModelViewSet):
     """
     A viewset for listing or retrieving flights
     """
     serializer_class = FlightSerializer
     queryset = Flight.objects.all()
 
-class AirportViewSet(DefaultsMixin, viewsets.ModelViewSet):
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class AirportViewSet(viewsets.ModelViewSet):
     """
     A viewset for listing airports
     """

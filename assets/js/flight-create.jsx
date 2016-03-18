@@ -26,7 +26,7 @@ module.exports = React.createClass({
     
     handleSubmit: function(e) {
         e.preventDefault()
-        formData = {
+        var formData = {
             origin_iata: this.state.origin,
             destination_iata: this.state.destination,
             max_price: this.state.max_price
@@ -65,7 +65,7 @@ module.exports = React.createClass({
                 </tr>
             </tbody>
             </table>
-            <input type="submit" />
+            <button type="submit" >Create alert</button>
             </form>
         )
     }

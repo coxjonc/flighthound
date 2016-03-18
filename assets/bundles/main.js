@@ -49,9 +49,9 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
 	var Router = __webpack_require__(159);
-	var Dashboard = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./dashboard\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var Login = __webpack_require__(227);
-	var auth = __webpack_require__(226);
+	var Dashboard = __webpack_require__(216);
+	var Login = __webpack_require__(228);
+	var auth = __webpack_require__(227);
 
 	var FlightApp = React.createClass({
 	    displayName: 'FlightApp',
@@ -67,6 +67,10 @@
 	        this.setState({
 	            loggedIn: loggedIn
 	        });
+	    },
+
+	    componentDidMount: function componentDidMount() {
+	        auth.onChange = this.updateAuth;
 	    },
 
 	    render: function render() {
@@ -24763,7 +24767,71 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 216 */,
+/* 216 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	var React = __webpack_require__(1);
+	var FlightCreate = __webpack_require__(218);
+	var FlightList = __webpack_require__(225);
+	var auth = __webpack_require__(227);
+
+	module.exports = React.createClass({
+	    displayName: 'exports',
+
+
+	    contextTypes: {
+	        router: React.PropTypes.object.isRequired
+	    },
+
+	    logoutHandler: function logoutHandler() {
+	        auth.logout();
+	        this.context.router.replace('/login/');
+	    },
+
+	    loadUserData: function loadUserData() {
+	        $.ajax({
+	            type: 'GET',
+	            url: '/api/users/i/',
+	            datatype: 'json',
+	            headers: { 'Authorization': 'Token ' + localStorage.flighthound_token },
+	            success: function (res) {
+	                this.setState({ user: res });
+	            }.bind(this)
+	        });
+	    },
+
+	    getInitialState: function getInitialState() {
+	        return { user: null };
+	    },
+
+	    componentDidMount: function componentDidMount() {
+	        this.loadUserData();
+	    },
+
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(FlightCreate, null),
+	            React.createElement(
+	                'h2',
+	                null,
+	                'Your flight alerts'
+	            ),
+	            React.createElement(FlightList, { user: this.state.user }),
+	            React.createElement(
+	                'button',
+	                { className: 'logout', onClick: this.logoutHandler },
+	                'Log out'
+	            )
+	        );
+	    }
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(217)))
+
+/***/ },
 /* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -34601,15 +34669,304 @@
 
 
 /***/ },
-/* 218 */,
-/* 219 */,
-/* 220 */,
-/* 221 */,
-/* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
+/* 218 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	var _stringify = __webpack_require__(219);
+
+	var _stringify2 = _interopRequireDefault(_stringify);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var React = __webpack_require__(1);
+	var TypeInput = __webpack_require__(222);
+	var FromSelect = __webpack_require__(223);
+	var ToSelect = __webpack_require__(224);
+
+	module.exports = React.createClass({
+	    displayName: 'exports',
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            origin_iata: '',
+	            destination_iata: '',
+	            max_price: 0
+	        };
+	    },
+
+	    handleFromChange: function handleFromChange(e) {
+	        this.setState({ origin: e.target.value });
+	    },
+
+	    handleToChange: function handleToChange(e) {
+	        this.setState({ destination: e.target.value });
+	    },
+
+	    handlePriceChange: function handlePriceChange(e) {
+	        this.setState({ max_price: e.target.value });
+	    },
+
+	    handleSubmit: function handleSubmit(e) {
+	        e.preventDefault();
+	        var formData = {
+	            origin_iata: this.state.origin,
+	            destination_iata: this.state.destination,
+	            max_price: this.state.max_price
+	        };
+	        $.ajax({
+	            type: 'POST',
+	            url: '/flights/',
+	            data: (0, _stringify2.default)(formData),
+	            success: function () {
+	                alert('request sent');
+	            }.bind(this),
+	            datatype: 'json',
+	            contentType: 'application/json'
+	        });
+	    },
+
+	    render: function render() {
+	        return React.createElement(
+	            'form',
+	            { className: 'foo', onSubmit: this.handleSubmit },
+	            React.createElement(
+	                'table',
+	                null,
+	                React.createElement(
+	                    'tbody',
+	                    null,
+	                    React.createElement(
+	                        'tr',
+	                        null,
+	                        React.createElement(
+	                            'td',
+	                            null,
+	                            React.createElement(TypeInput, null)
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'tr',
+	                        null,
+	                        React.createElement(
+	                            'td',
+	                            null,
+	                            'From: '
+	                        ),
+	                        React.createElement(
+	                            'td',
+	                            null,
+	                            React.createElement('input', { type: 'text', onChange: this.handleFromChange })
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'tr',
+	                        null,
+	                        React.createElement(
+	                            'td',
+	                            null,
+	                            'To: '
+	                        ),
+	                        React.createElement(
+	                            'td',
+	                            null,
+	                            React.createElement('input', { type: 'text', onChange: this.handleToChange })
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'tr',
+	                        null,
+	                        React.createElement(
+	                            'td',
+	                            null,
+	                            'Max price: '
+	                        ),
+	                        React.createElement(
+	                            'td',
+	                            null,
+	                            React.createElement('input', { type: 'text', onChange: this.handlePriceChange })
+	                        )
+	                    )
+	                )
+	            ),
+	            React.createElement(
+	                'button',
+	                { type: 'submit' },
+	                'Create alert'
+	            )
+	        );
+	    }
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(217)))
+
+/***/ },
+/* 219 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(220), __esModule: true };
+
+/***/ },
+/* 220 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var core  = __webpack_require__(221)
+	  , $JSON = core.JSON || (core.JSON = {stringify: JSON.stringify});
+	module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
+	  return $JSON.stringify.apply($JSON, arguments);
+	};
+
+/***/ },
+/* 221 */
+/***/ function(module, exports) {
+
+	var core = module.exports = {version: '2.1.5'};
+	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+
+/***/ },
+/* 222 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	module.exports = React.createClass({
+	    displayName: 'exports',
+
+	    getInitialState: function getInitialState() {
+	        return { selectedType: 'round-trip' };
+	    },
+	    handleChange: function handleChange(e) {
+	        this.setState({
+	            selectedType: e.currentTarget.value
+	        });
+	    },
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement('input', { type: 'radio', value: 'round-trip', name: 'foo',
+	                onChange: this.handleChange,
+	                checked: 'round-trip' === this.state.selectedType }),
+	            React.createElement('input', { type: 'radio', value: 'one-way', name: 'foo',
+	                onChange: this.handleChange,
+	                checked: 'one-way' === this.state.selectedType })
+	        );
+	    }
+	});
+
+/***/ },
+/* 223 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	module.exports = React.createClass({
+	    displayName: "exports",
+
+	    render: function render() {
+	        return React.createElement("input", { type: "text" });
+	    }
+	});
+
+/***/ },
+/* 224 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	module.exports = React.createClass({
+	    displayName: "exports",
+
+	    render: function render() {
+	        return React.createElement("input", { type: "text" });
+	    }
+	});
+
+/***/ },
+/* 225 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Flight = __webpack_require__(226);
+
+	module.exports = React.createClass({
+	    displayName: 'exports',
+
+
+	    render: function render() {
+	        if (this.props.user != null) {
+	            var flightNodes = this.props.user.flights.map(function (flight) {
+	                return React.createElement(Flight, { url: flight });
+	            });
+	            return React.createElement(
+	                'ul',
+	                null,
+	                flightNodes
+	            );
+	        } else {
+	            return React.createElement(
+	                'div',
+	                null,
+	                ' You have created no flight alerts yet '
+	            );
+	        }
+	    }
+	});
+
+/***/ },
 /* 226 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	var React = __webpack_require__(1);
+
+	module.exports = React.createClass({
+	    displayName: 'exports',
+
+	    getInitialState: function getInitialState() {
+	        return { flight: [] };
+	    },
+
+	    componentDidMount: function componentDidMount() {
+	        this.loadFlight();
+	    },
+
+	    loadFlight: function loadFlight() {
+	        $.ajax({
+	            type: 'GET',
+	            url: this.props.url,
+	            datatype: 'json',
+	            headers: {
+	                'Authorization': 'Token ' + localStorage.flighthound_token
+	            },
+	            success: function (res) {
+	                this.setState({ flight: res });
+	            }.bind(this)
+	        });
+	    },
+
+	    render: function render() {
+	        var flight = this.state.flight;
+	        return React.createElement(
+	            'li',
+	            null,
+	            flight.from_iata + ' to ' + flight.to_iata + ' on ' + flight.depart_date
+	        );
+	    }
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(217)))
+
+/***/ },
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -34627,6 +34984,7 @@
 	        }
 	        this.getToken(username, pass, function (res) {
 	            if (res.authenticated) {
+	                debugger;
 	                localStorage.flighthound_token = res.token;
 	                if (cb) cb(true);
 	                _this.onChange(true);
@@ -34655,8 +35013,11 @@
 	                username: username,
 	                password: pass
 	            },
-	            success: function () {
-	                cb({ authenticated: true });
+	            success: function (res) {
+	                cb({
+	                    authenticated: true,
+	                    token: res.token
+	                });
 	            }.bind(this)
 	        });
 	    }
@@ -34664,13 +35025,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(217)))
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var auth = __webpack_require__(226);
+	var auth = __webpack_require__(227);
 
 	module.exports = React.createClass({
 	    displayName: 'exports',

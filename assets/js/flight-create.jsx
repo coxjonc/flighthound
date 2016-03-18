@@ -35,12 +35,18 @@ module.exports = React.createClass({
             type: 'POST',
             url: '/api/flights/',
             data: JSON.stringify(formData),
+        headers: {
+            Authorization: 'Token ' + localStorage.flighthound_token
+        },
             success: function() {
-                alert('request sent')
-            }.bind(this),
+                console.log('Flight alert created.')
+            },
             datatype: 'json',
             contentType: 'application/json'
         })
+    },
+
+    updateUser: function() {
     },
 
     render: function() {

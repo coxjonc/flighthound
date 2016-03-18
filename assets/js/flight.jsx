@@ -26,7 +26,7 @@ module.exports = React.createClass({
     render: function() {
         var flight = this.state.flight
         return (
-           <li>{flight.from_iata + ' to ' + flight.to_iata + ' on ' + flight.depart_date}</li>        
+           <li>{flight.origin_iata + ' to ' + flight.destination_iata + ' on ' + flight.departure_date +  '. Max price: ' + flight.max_price}</li>        
         )
     }
 })

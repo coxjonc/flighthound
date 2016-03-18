@@ -24808,12 +24808,20 @@
 
 	    componentDidMount: function componentDidMount() {
 	        this.loadUserData();
+	        setInterval(this.loadUserData, 2000);
+	        FlightCreate.updateUser = this.updateUser;
+	    },
+
+	    updateUser: function updateUser() {
+	        console.log('user updated');
+	        this.loadUserData();
 	    },
 
 	    render: function render() {
 	        return React.createElement(
 	            'div',
 	            null,
+	            this.state.user ? this.state.user.username : '',
 	            React.createElement(FlightCreate, null),
 	            React.createElement(
 	                'h2',
@@ -34719,13 +34727,18 @@
 	            type: 'POST',
 	            url: '/api/flights/',
 	            data: (0, _stringify2.default)(formData),
-	            success: function () {
-	                alert('request sent');
-	            }.bind(this),
+	            headers: {
+	                Authorization: 'Token ' + localStorage.flighthound_token
+	            },
+	            success: function success() {
+	                console.log('Flight alert created.');
+	            },
 	            datatype: 'json',
 	            contentType: 'application/json'
 	        });
 	    },
+
+	    updateUser: function updateUser() {},
 
 	    render: function render() {
 	        return React.createElement(
@@ -34959,7 +34972,7 @@
 	        return React.createElement(
 	            'li',
 	            null,
-	            flight.from_iata + ' to ' + flight.to_iata + ' on ' + flight.depart_date
+	            flight.origin_iata + ' to ' + flight.destination_iata + ' on ' + flight.departure_date + '. Max price: ' + flight.max_price
 	        );
 	    }
 	});

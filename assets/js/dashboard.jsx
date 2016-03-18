@@ -32,11 +32,19 @@ module.exports = React.createClass({
 
     componentDidMount: function() {
         this.loadUserData()
+        setInterval(this.loadUserData, 2000)
+        FlightCreate.updateUser = this.updateUser
+    },
+
+    updateUser: function() {
+        console.log('user updated')
+        this.loadUserData()
     },
 
     render: function() {
         return (
             <div>
+                {(this.state.user) ? this.state.user.username : ''}
                 <FlightCreate />
                 <h2>Your flight alerts</h2>
                 <FlightList user={this.state.user} />

@@ -5,11 +5,11 @@ var ToSelect = require('./to-select')
 
 module.exports = React.createClass({
     getInitialState: function() {
-        return ({    
+        return {    
             origin_iata: '', 
             destination_iata: '', 
             max_price: 0
-        })
+        }
     },
 
     handleFromChange: function(e) {
@@ -33,7 +33,7 @@ module.exports = React.createClass({
         }
         $.ajax({
             type: 'POST',
-            url: '/flights/',
+            url: '/api/flights/',
             data: JSON.stringify(formData),
             success: function() {
                 alert('request sent')

@@ -34717,7 +34717,7 @@
 	        };
 	        $.ajax({
 	            type: 'POST',
-	            url: '/flights/',
+	            url: '/api/flights/',
 	            data: (0, _stringify2.default)(formData),
 	            success: function () {
 	                alert('request sent');

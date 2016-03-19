@@ -55,8 +55,8 @@ module.exports = React.createClass({
         var formData = {
             origin_iata: this.state.origin,
             destination_iata: this.state.destination,
-            depart_date: this.state.departDate.startOf('day'),
-            return_date: this.state.returnDate.startOf('day'),
+            depart_date: this.state.departDate.format('YYYY-MM-DD'),
+            return_date: this.state.returnDate.format('YYYY-MM-DD'),
             max_price: this.state.maxPrice
         }
         $.ajax({

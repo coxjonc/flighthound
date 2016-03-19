@@ -12,10 +12,14 @@ module.exports = React.createClass({
     render: function() {
         return (
                 <div>
-                    <input type="radio" value="round-trip" name="foo" 
+                    <label>Round trip</label>
+                    <input type="radio" 
+                        value='round-trip'
                         onChange={this.handleChange}
                         checked={'round-trip' === this.state.selectedType} />
-                    <input type="radio" value="one-way" name="foo" 
+                    <label>One-way</label>
+                    <input type="radio"  
+                        value='one-way'
                         onChange={this.handleChange}    
                         checked={'one-way' === this.state.selectedType} />
                 </div>

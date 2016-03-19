@@ -85,8 +85,8 @@
 	function requireAuth(nextState, replace) {
 	    if (!auth.loggedIn()) {
 	        replace({
-	            pathname: '/login/',
-	            state: { nextPathname: '/dashboard/' }
+	            pathname: '/app/login/',
+	            state: { nextPathname: '/app/dashboard/' }
 	        });
 	    }
 	}
@@ -96,7 +96,7 @@
 	    { history: Router.browserHistory },
 	    React.createElement(
 	        Router.Route,
-	        { path: '/', component: FlightApp },
+	        { path: '/app/', component: FlightApp },
 	        React.createElement(Router.Route, { path: 'login/', component: Login }),
 	        React.createElement(Router.Route, { path: 'dashboard/', component: Dashboard, onEnter: requireAuth })
 	    )
@@ -24787,7 +24787,7 @@
 
 	    logoutHandler: function logoutHandler() {
 	        auth.logout();
-	        this.context.router.replace('/login/');
+	        this.context.router.replace('/app/login/');
 	    },
 
 	    loadUserData: function loadUserData() {
@@ -24809,31 +24809,34 @@
 	    componentDidMount: function componentDidMount() {
 	        this.loadUserData();
 	        setInterval(this.loadUserData, 2000);
-	        FlightCreate.updateUser = this.updateUser;
-	    },
-
-	    updateUser: function updateUser() {
-	        console.log('user updated');
-	        this.loadUserData();
 	    },
 
 	    render: function render() {
 	        return React.createElement(
 	            'div',
 	            null,
-	            this.state.user ? this.state.user.username : '',
+	            React.createElement(
+	                'p',
+	                null,
+	                this.state.user ? this.state.user.username : ''
+	            ),
+	            React.createElement(
+	                'button',
+	                { className: 'logout', onClick: this.logoutHandler },
+	                'Log out'
+	            ),
+	            React.createElement(
+	                'h2',
+	                null,
+	                'Create new alert'
+	            ),
 	            React.createElement(FlightCreate, null),
 	            React.createElement(
 	                'h2',
 	                null,
 	                'Your flight alerts'
 	            ),
-	            React.createElement(FlightList, { user: this.state.user }),
-	            React.createElement(
-	                'button',
-	                { className: 'logout', onClick: this.logoutHandler },
-	                'Log out'
-	            )
+	            React.createElement(FlightList, { user: this.state.user })
 	        );
 	    }
 	});
@@ -34744,21 +34747,13 @@
 	        return React.createElement(
 	            'form',
 	            { className: 'foo', onSubmit: this.handleSubmit },
+	            React.createElement(TypeInput, null),
 	            React.createElement(
 	                'table',
 	                null,
 	                React.createElement(
 	                    'tbody',
 	                    null,
-	                    React.createElement(
-	                        'tr',
-	                        null,
-	                        React.createElement(
-	                            'td',
-	                            null,
-	                            React.createElement(TypeInput, null)
-	                        )
-	                    ),
 	                    React.createElement(
 	                        'tr',
 	                        null,
@@ -34859,10 +34854,22 @@
 	        return React.createElement(
 	            'div',
 	            null,
-	            React.createElement('input', { type: 'radio', value: 'round-trip', name: 'foo',
+	            React.createElement(
+	                'label',
+	                null,
+	                'Round trip'
+	            ),
+	            React.createElement('input', { type: 'radio',
+	                value: 'round-trip',
 	                onChange: this.handleChange,
 	                checked: 'round-trip' === this.state.selectedType }),
-	            React.createElement('input', { type: 'radio', value: 'one-way', name: 'foo',
+	            React.createElement(
+	                'label',
+	                null,
+	                'One-way'
+	            ),
+	            React.createElement('input', { type: 'radio',
+	                value: 'one-way',
 	                onChange: this.handleChange,
 	                checked: 'one-way' === this.state.selectedType })
 	        );
@@ -34907,6 +34914,7 @@
 
 	'use strict';
 
+	//add button to remove alert
 	var React = __webpack_require__(1);
 	var Flight = __webpack_require__(226);
 
@@ -35076,7 +35084,7 @@
 	            if (location.state && location.state.nextPathname) {
 	                _this.context.router.replace(location.state.nextPathname);
 	            } else {
-	                _this.context.router.replace('/dashboard/');
+	                _this.context.router.replace('/app/dashboard/');
 	            }
 	        });
 	    },

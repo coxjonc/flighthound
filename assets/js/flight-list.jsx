@@ -1,3 +1,4 @@
+//add button to remove alert
 var React = require('react')
 var Flight = require('./flight')
 

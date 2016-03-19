@@ -52,11 +52,9 @@ module.exports = React.createClass({
     render: function() {
         return (
             <form className="foo" onSubmit={this.handleSubmit}>
+            <TypeInput />
             <table>
             <tbody>
-                <tr>
-                    <td><TypeInput /></td>
-                </tr>
                 <tr>
                     <td>From: </td>
                     <td><input type="text" onChange={this.handleFromChange} /></td>

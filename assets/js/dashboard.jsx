@@ -11,7 +11,7 @@ module.exports = React.createClass({
 
     logoutHandler: function() {
         auth.logout()
-        this.context.router.replace('/login/')
+        this.context.router.replace('/app/login/')
     },
     
     loadUserData: function() {
@@ -33,22 +33,17 @@ module.exports = React.createClass({
     componentDidMount: function() {
         this.loadUserData()
         setInterval(this.loadUserData, 2000)
-        FlightCreate.updateUser = this.updateUser
-    },
-
-    updateUser: function() {
-        console.log('user updated')
-        this.loadUserData()
     },
 
     render: function() {
         return (
             <div>
-                {(this.state.user) ? this.state.user.username : ''}
+                <p>{(this.state.user) ? this.state.user.username : ''}</p>
+                <button className="logout" onClick={this.logoutHandler}>Log out</button>
+                <h2>Create new alert</h2>
                 <FlightCreate />
                 <h2>Your flight alerts</h2>
                 <FlightList user={this.state.user} />
-                <button className="logout" onClick={this.logoutHandler}>Log out</button>
             </div>
         )
     }

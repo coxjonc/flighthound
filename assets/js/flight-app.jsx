@@ -35,15 +35,15 @@ var FlightApp = React.createClass({
 function requireAuth(nextState, replace) {
     if (!auth.loggedIn()) {
         replace({ 
-            pathname:'/login/',
-            state: {nextPathname: '/dashboard/'}
+            pathname:'/app/login/',
+            state: {nextPathname: '/app/dashboard/'}
         })
     }
 }
 
 ReactDOM.render(
     <Router.Router history={Router.browserHistory}>
-        <Router.Route path='/' component={FlightApp}>
+        <Router.Route path='/app/' component={FlightApp}>
             <Router.Route path='login/' component={Login} />
             <Router.Route path='dashboard/' component={Dashboard} onEnter={requireAuth} />
         </Router.Route>

@@ -16,7 +16,7 @@ module.exports = {
             $: 'jquery',
             jQuery: 'jquery',
             'window.jQuery': 'jquery'
-        })
+        }),
     ],
 
     module: {
@@ -29,6 +29,9 @@ module.exports = {
                     presets: ['react', 'es2016']
                 }
             },
+            {
+                test: /\.css$/, loader: 'style-loader!css-loader'
+            }
         ]
     },
 

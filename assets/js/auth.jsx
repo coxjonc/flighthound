@@ -9,7 +9,6 @@ module.exports = {
         }
         this.getToken(username, pass, (res) => {
             if (res.authenticated) {
-                debugger
                 localStorage.flighthound_token = res.token
                 if (cb) cb(true)
                 this.onChange(true)

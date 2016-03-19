@@ -4,7 +4,7 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {selectedType: 'round-trip'}
     },
-    handleChange: function(e) {
+    handleTypeChange: function(e) {
         this.setState({
             selectedType: e.currentTarget.value   
         })

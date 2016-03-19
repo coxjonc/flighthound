@@ -91,11 +91,11 @@ module.exports = React.createClass({
                 <table>
                 <tbody>
                     <tr>
-                        <td>From (IATA code): </td>
+                        <td>From (IATA): </td>
                         <td><input type="text" onChange={this.handleFromChange} /></td>
                     </tr>
                     <tr>
-                        <td>To (IATA code): </td>
+                        <td>To (IATA): </td>
                         <td><input type="text" onChange={this.handleToChange} /></td>
                     </tr>
                     <tr>

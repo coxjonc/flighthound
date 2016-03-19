@@ -24808,7 +24808,7 @@
 
 	    componentDidMount: function componentDidMount() {
 	        this.loadUserData();
-	        //        setInterval(this.loadUserData, 2000)
+	        setInterval(this.loadUserData, 2000);
 	    },
 
 	    render: function render() {
@@ -34803,7 +34803,7 @@
 	                        React.createElement(
 	                            'td',
 	                            null,
-	                            'From (IATA code): '
+	                            'From (IATA): '
 	                        ),
 	                        React.createElement(
 	                            'td',
@@ -34817,7 +34817,7 @@
 	                        React.createElement(
 	                            'td',
 	                            null,
-	                            'To (IATA code): '
+	                            'To (IATA): '
 	                        ),
 	                        React.createElement(
 	                            'td',
@@ -61752,7 +61752,7 @@
 /* 432 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
 	//add button to remove alert
 	var React = __webpack_require__(1);
@@ -61762,11 +61762,30 @@
 	    displayName: 'exports',
 
 
+	    handleDelete: function handleDelete(url) {
+	        $.ajax({
+	            type: 'DELETE',
+	            url: url,
+	            headers: {
+	                'Authorization': 'Token ' + localStorage.flighthound_token
+	            }
+	        });
+	    },
+
 	    render: function render() {
 	        if (this.props.user != null) {
-	            var flightNodes = this.props.user.flights.map(function (flight) {
-	                return React.createElement(Flight, { url: flight });
-	            });
+	            var flightNodes = this.props.user.flights.map(function (flight, i) {
+	                return React.createElement(
+	                    'div',
+	                    null,
+	                    React.createElement(Flight, { url: flight, key: i }),
+	                    React.createElement(
+	                        'button',
+	                        { onClick: this.handleDelete(flight) },
+	                        'Delete'
+	                    )
+	                );
+	            }.bind(this));
 	            return React.createElement(
 	                'ul',
 	                null,
@@ -61781,6 +61800,7 @@
 	        }
 	    }
 	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(217)))
 
 /***/ },
 /* 433 */
@@ -61794,17 +61814,27 @@
 	    displayName: 'exports',
 
 	    getInitialState: function getInitialState() {
-	        return { flight: [] };
+	        return { flight: [], url: this.props.url };
 	    },
 
 	    componentDidMount: function componentDidMount() {
 	        this.loadFlight();
 	    },
 
+	    handleDelete: function handleDelete() {
+	        $.ajax({
+	            type: 'DELETE',
+	            url: this.state.url,
+	            headers: {
+	                'Authorization': 'Token ' + localStorage.flighthound_token
+	            }
+	        });
+	    },
+
 	    loadFlight: function loadFlight() {
 	        $.ajax({
 	            type: 'GET',
-	            url: this.props.url,
+	            url: this.state.url,
 	            datatype: 'json',
 	            headers: {
 	                'Authorization': 'Token ' + localStorage.flighthound_token
@@ -61820,7 +61850,12 @@
 	        return React.createElement(
 	            'li',
 	            null,
-	            flight.origin_iata + ' to ' + flight.destination_iata + ' on ' + flight.departure_date + '. Max price: ' + flight.max_price
+	            flight.origin_iata + ' to ' + flight.destination_iata + ' on ' + flight.depart_date + '. Max price: ' + flight.max_price,
+	            React.createElement(
+	                'button',
+	                { onClick: this.handleDelete },
+	                'Delete'
+	            )
 	        );
 	    }
 	});

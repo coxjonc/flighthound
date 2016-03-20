@@ -5,6 +5,8 @@ var Dashboard = require('./dashboard')
 var Login = require('./login')
 var auth = require('./auth')
 
+require('bootstrap-webpack')
+
 var FlightApp = React.createClass({
     
     getInitialState: function() {
@@ -26,6 +28,7 @@ var FlightApp = React.createClass({
     render: function() {
         return (
             <div>
+            <nav className="navbar navbar-inverse"></nav>
                 {this.props.children}
             </div>
         )

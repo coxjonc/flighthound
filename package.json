@@ -21,10 +21,17 @@
     "babel-preset-es2016": "^6.0.6",
     "babel-preset-react": "^6.5.0",
     "babel-runtime": "^6.6.1",
+    "bootstrap": "^3.3.6",
+    "bootstrap-webpack": "0.0.5",
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
+    "exports-loader": "^0.6.3",
     "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
+    "imports-loader": "^0.6.5",
     "jquery": "^2.2.1",
+    "less": "^2.6.1",
+    "less-loader": "^2.2.2",
     "moment": "^2.12.0",
     "react": "^0.14.7",
     "react-datepicker": "^0.24.0",
@@ -33,6 +40,7 @@
     "react-router": "^2.0.1",
     "react-select": "^1.0.0-beta1",
     "style-loader": "^0.13.0",
+    "url-loader": "^0.5.7",
     "webpack": "^1.12.14"
   }
 }

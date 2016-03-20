@@ -21,13 +21,13 @@ module.exports = React.createClass({
             datatype: 'json',
             headers: {'Authorization': 'Token ' + localStorage.flighthound_token},
             success: function(res) {
-                this.setState({user: res})
+                this.setState({data: res})
             }.bind(this)
         })
     },
 
     getInitialState: function() {
-        return {user: null}
+        return {data: {}}
     },
 
     componentDidMount: function() {
@@ -38,12 +38,12 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div>
-                <p>{(this.state.user) ? this.state.user.username : ''}</p>
+                <p>{(this.state.data) ? this.state.data.username : ''}</p>
                 <button className="logout" onClick={this.logoutHandler}>Log out</button>
                 <h2>Create new alert</h2>
                 <FlightCreate />
                 <h2>Your flight alerts</h2>
-                <FlightList user={this.state.user} />
+                <FlightList user={this.state.data} />
             </div>
         )
     }

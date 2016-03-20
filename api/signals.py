@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
+from .models import Flight
+
 @receiver(post_save, sender=User)
 def init_new_user(sender, instance, signal, created, **kwargs):
     """
@@ -11,3 +13,13 @@ def init_new_user(sender, instance, signal, created, **kwargs):
     if created: 
         print "Token created"
         Token.objects.create(user=instance)
+
+@receiver(post_save, sender=Flight)
+def init_new_flight(sender, instance, signal, created, **kwargs):
+    """
+    Create a unique key for each new flight 
+    """
+    if created:
+        print 'Unique key created'
+        instance.key = instance.pk
+        instance.save()

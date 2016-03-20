@@ -7,6 +7,7 @@ class Airport(models.Model):
 
 class Flight(models.Model):
     user = models.ForeignKey(User, null=True, related_name='flights')
+    key = models.IntegerField(null=True, unique=True)
     max_price = models.IntegerField(null=True)
     origin_city = models.CharField(max_length=200, null=True)
     origin_iata = models.CharField(max_length=200)

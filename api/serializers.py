@@ -14,11 +14,11 @@ class FlightSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Flight
-        fields = ('url', 'user', 'origin_city', 'max_price', 'origin_iata', 'destination_city', 'destination_iata',
+        fields = ('url', 'key', 'user', 'origin_city', 'max_price', 'origin_iata', 'destination_city', 'destination_iata',
             'depart_date', 'return_date', 'round_trip', 'created_at', 'updated_at')
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    flights = serializers.HyperlinkedRelatedField(many=True, view_name='flight-detail', read_only=True) 
+    flights = FlightSerializer(many=True)
 
     class Meta:
         model = User

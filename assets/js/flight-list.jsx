@@ -1,29 +1,36 @@
 //add button to remove alert
 var React = require('react')
-var Flight = require('./flight')
 
 module.exports = React.createClass({
 
     handleDelete: function(url) {
         $.ajax({
-                type: 'DELETE',
-                url: url,
-                headers: {
-                    'Authorization': 'Token ' + localStorage.flighthound_token
-                } 
-            })
+            url: url,
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Token ' + localStorage.flighthound_token
+            },
+            success: function() {
+                console.log('Deleted')
+            }
+        })
     },
-    
+
     render: function() {
-        if (this.props.user != null) {
+        if (this.props.user.flights) {
             var flightNodes = this.props.user.flights.map(
-                function(flight, i){
+                function(flight){
                     return (
-                        <div>
-                        <Flight url={flight} key={i} />
-                        <button onClick={this.handleDelete(flight)}>Delete</button>
-                        </div>
-                        )
+                <li key={flight.key}>
+                    {flight.origin_iata + ' to ' 
+                    + flight.destination_iata + ' on ' 
+                    + flight.depart_date +  
+                    '. Max price: ' + flight.max_price}
+                    <button onClick={this.handleDelete.bind(this, flight.url)}>
+                        Delete
+                    </button>
+                </li>        
+                )
                 }.bind(this)) 
             return (
                 <ul> 

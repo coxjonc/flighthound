@@ -50,8 +50,8 @@
 	var ReactDOM = __webpack_require__(158);
 	var Router = __webpack_require__(159);
 	var Dashboard = __webpack_require__(216);
-	var Login = __webpack_require__(435);
-	var auth = __webpack_require__(434);
+	var Login = __webpack_require__(434);
+	var auth = __webpack_require__(433);
 
 	var FlightApp = React.createClass({
 	    displayName: 'FlightApp',
@@ -24775,7 +24775,7 @@
 	var React = __webpack_require__(1);
 	var FlightCreate = __webpack_require__(218);
 	var FlightList = __webpack_require__(432);
-	var auth = __webpack_require__(434);
+	var auth = __webpack_require__(433);
 
 	module.exports = React.createClass({
 	    displayName: 'exports',
@@ -24797,13 +24797,13 @@
 	            datatype: 'json',
 	            headers: { 'Authorization': 'Token ' + localStorage.flighthound_token },
 	            success: function (res) {
-	                this.setState({ user: res });
+	                this.setState({ data: res });
 	            }.bind(this)
 	        });
 	    },
 
 	    getInitialState: function getInitialState() {
-	        return { user: null };
+	        return { data: {} };
 	    },
 
 	    componentDidMount: function componentDidMount() {
@@ -24818,7 +24818,7 @@
 	            React.createElement(
 	                'p',
 	                null,
-	                this.state.user ? this.state.user.username : ''
+	                this.state.data ? this.state.data.username : ''
 	            ),
 	            React.createElement(
 	                'button',
@@ -24836,7 +24836,7 @@
 	                null,
 	                'Your flight alerts'
 	            ),
-	            React.createElement(FlightList, { user: this.state.user })
+	            React.createElement(FlightList, { user: this.state.data })
 	        );
 	    }
 	});
@@ -61756,7 +61756,6 @@
 
 	//add button to remove alert
 	var React = __webpack_require__(1);
-	var Flight = __webpack_require__(433);
 
 	module.exports = React.createClass({
 	    displayName: 'exports',
@@ -61764,24 +61763,27 @@
 
 	    handleDelete: function handleDelete(url) {
 	        $.ajax({
-	            type: 'DELETE',
 	            url: url,
+	            method: 'DELETE',
 	            headers: {
 	                'Authorization': 'Token ' + localStorage.flighthound_token
+	            },
+	            success: function success() {
+	                console.log('Deleted');
 	            }
 	        });
 	    },
 
 	    render: function render() {
-	        if (this.props.user != null) {
-	            var flightNodes = this.props.user.flights.map(function (flight, i) {
+	        if (this.props.user.flights) {
+	            var flightNodes = this.props.user.flights.map(function (flight) {
 	                return React.createElement(
-	                    'div',
-	                    null,
-	                    React.createElement(Flight, { url: flight, key: i }),
+	                    'li',
+	                    { key: flight.key },
+	                    flight.origin_iata + ' to ' + flight.destination_iata + ' on ' + flight.depart_date + '. Max price: ' + flight.max_price,
 	                    React.createElement(
 	                        'button',
-	                        { onClick: this.handleDelete(flight) },
+	                        { onClick: this.handleDelete.bind(this, flight.url) },
 	                        'Delete'
 	                    )
 	                );
@@ -61804,65 +61806,6 @@
 
 /***/ },
 /* 433 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {'use strict';
-
-	var React = __webpack_require__(1);
-
-	module.exports = React.createClass({
-	    displayName: 'exports',
-
-	    getInitialState: function getInitialState() {
-	        return { flight: [], url: this.props.url };
-	    },
-
-	    componentDidMount: function componentDidMount() {
-	        this.loadFlight();
-	    },
-
-	    handleDelete: function handleDelete() {
-	        $.ajax({
-	            type: 'DELETE',
-	            url: this.state.url,
-	            headers: {
-	                'Authorization': 'Token ' + localStorage.flighthound_token
-	            }
-	        });
-	    },
-
-	    loadFlight: function loadFlight() {
-	        $.ajax({
-	            type: 'GET',
-	            url: this.state.url,
-	            datatype: 'json',
-	            headers: {
-	                'Authorization': 'Token ' + localStorage.flighthound_token
-	            },
-	            success: function (res) {
-	                this.setState({ flight: res });
-	            }.bind(this)
-	        });
-	    },
-
-	    render: function render() {
-	        var flight = this.state.flight;
-	        return React.createElement(
-	            'li',
-	            null,
-	            flight.origin_iata + ' to ' + flight.destination_iata + ' on ' + flight.depart_date + '. Max price: ' + flight.max_price,
-	            React.createElement(
-	                'button',
-	                { onClick: this.handleDelete },
-	                'Delete'
-	            )
-	        );
-	    }
-	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(217)))
-
-/***/ },
-/* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -61920,13 +61863,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(217)))
 
 /***/ },
-/* 435 */
+/* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var auth = __webpack_require__(434);
+	var auth = __webpack_require__(433);
 
 	module.exports = React.createClass({
 	    displayName: 'exports',

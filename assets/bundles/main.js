@@ -24815,11 +24815,7 @@
 	        return React.createElement(
 	            'div',
 	            null,
-	            React.createElement(
-	                'p',
-	                null,
-	                this.state.data ? this.state.data.username : ''
-	            ),
+	            this.state.data ? this.state.data.username : '',
 	            React.createElement(
 	                'button',
 	                { className: 'logout', onClick: this.logoutHandler },
@@ -34707,6 +34703,7 @@
 
 	    getInitialState: function getInitialState() {
 	        return {
+	            errorMessage: '',
 	            origin: '',
 	            destination: '',
 	            departDate: moment(),
@@ -34764,6 +34761,9 @@
 	            success: function success() {
 	                console.log('Flight alert created.');
 	            },
+	            error: function (xhr, status, err) {
+	                this.setState({ errorMessage: err });
+	            }.bind(this),
 	            datatype: 'json',
 	            contentType: 'application/json'
 	        });
@@ -34773,111 +34773,120 @@
 
 	    render: function render() {
 	        return React.createElement(
-	            'form',
-	            { className: 'flight-create', onSubmit: this.handleSubmit },
+	            'div',
+	            null,
 	            React.createElement(
-	                'label',
-	                null,
-	                'Round trip'
-	            ),
-	            React.createElement('input', { type: 'radio',
-	                onChange: this.handleTypeChange,
-	                checked: this.state.roundTrip === true }),
-	            React.createElement(
-	                'label',
-	                null,
-	                'One-way'
-	            ),
-	            React.createElement('input', { type: 'radio',
-	                onChange: this.handleTypeChange,
-	                checked: this.state.roundTrip === false }),
-	            React.createElement(
-	                'table',
-	                null,
+	                'form',
+	                { className: 'flight-create', onSubmit: this.handleSubmit },
 	                React.createElement(
-	                    'tbody',
+	                    'label',
+	                    null,
+	                    'Round trip'
+	                ),
+	                React.createElement('input', { type: 'radio',
+	                    onChange: this.handleTypeChange,
+	                    checked: this.state.roundTrip === true }),
+	                React.createElement(
+	                    'label',
+	                    null,
+	                    'One-way'
+	                ),
+	                React.createElement('input', { type: 'radio',
+	                    onChange: this.handleTypeChange,
+	                    checked: this.state.roundTrip === false }),
+	                React.createElement(
+	                    'table',
 	                    null,
 	                    React.createElement(
-	                        'tr',
+	                        'tbody',
 	                        null,
 	                        React.createElement(
-	                            'td',
+	                            'tr',
 	                            null,
-	                            'From (IATA): '
+	                            React.createElement(
+	                                'td',
+	                                null,
+	                                'From (IATA) '
+	                            ),
+	                            React.createElement(
+	                                'td',
+	                                null,
+	                                React.createElement('input', { type: 'text', onChange: this.handleFromChange })
+	                            )
 	                        ),
 	                        React.createElement(
-	                            'td',
+	                            'tr',
 	                            null,
-	                            React.createElement('input', { type: 'text', onChange: this.handleFromChange })
-	                        )
-	                    ),
-	                    React.createElement(
-	                        'tr',
-	                        null,
-	                        React.createElement(
-	                            'td',
-	                            null,
-	                            'To (IATA): '
+	                            React.createElement(
+	                                'td',
+	                                null,
+	                                'To (IATA) '
+	                            ),
+	                            React.createElement(
+	                                'td',
+	                                null,
+	                                React.createElement('input', { type: 'text', onChange: this.handleToChange })
+	                            )
 	                        ),
 	                        React.createElement(
-	                            'td',
+	                            'tr',
 	                            null,
-	                            React.createElement('input', { type: 'text', onChange: this.handleToChange })
-	                        )
-	                    ),
-	                    React.createElement(
-	                        'tr',
-	                        null,
-	                        React.createElement(
-	                            'td',
-	                            null,
-	                            'Departure Date: '
+	                            React.createElement(
+	                                'td',
+	                                null,
+	                                'Departure Date '
+	                            ),
+	                            React.createElement(
+	                                'td',
+	                                null,
+	                                React.createElement(DatePicker, {
+	                                    selected: this.state.departDate,
+	                                    onChange: this.handleDepartDateChange })
+	                            )
 	                        ),
 	                        React.createElement(
-	                            'td',
+	                            'tr',
 	                            null,
-	                            React.createElement(DatePicker, {
-	                                selected: this.state.departDate,
-	                                onChange: this.handleDepartDateChange })
-	                        )
-	                    ),
-	                    React.createElement(
-	                        'tr',
-	                        null,
-	                        React.createElement(
-	                            'td',
-	                            null,
-	                            'Return Date: '
+	                            React.createElement(
+	                                'td',
+	                                null,
+	                                'Return Date '
+	                            ),
+	                            React.createElement(
+	                                'td',
+	                                null,
+	                                React.createElement(DatePicker, {
+	                                    selected: this.state.returnDate,
+	                                    onChange: this.handleReturnDateChange,
+	                                    disabled: !this.state.roundTrip })
+	                            )
 	                        ),
 	                        React.createElement(
-	                            'td',
+	                            'tr',
 	                            null,
-	                            React.createElement(DatePicker, {
-	                                selected: this.state.returnDate,
-	                                onChange: this.handleReturnDateChange,
-	                                disabled: !this.state.roundTrip })
-	                        )
-	                    ),
-	                    React.createElement(
-	                        'tr',
-	                        null,
-	                        React.createElement(
-	                            'td',
-	                            null,
-	                            'Max price: '
-	                        ),
-	                        React.createElement(
-	                            'td',
-	                            null,
-	                            React.createElement('input', { type: 'text', onChange: this.handlePriceChange })
+	                            React.createElement(
+	                                'td',
+	                                null,
+	                                'Max price '
+	                            ),
+	                            React.createElement(
+	                                'td',
+	                                null,
+	                                React.createElement('input', { type: 'text', onChange: this.handlePriceChange })
+	                            )
 	                        )
 	                    )
+	                ),
+	                React.createElement(
+	                    'button',
+	                    { type: 'submit' },
+	                    'Create alert'
 	                )
 	            ),
 	            React.createElement(
-	                'button',
-	                { type: 'submit' },
-	                'Create alert'
+	                'span',
+	                null,
+	                this.state.errorMessage ? 'Invalid request' : ''
 	            )
 	        );
 	    }

@@ -12,6 +12,7 @@ require('react-datepicker/dist/react-datepicker.css')
 module.exports = React.createClass({
     getInitialState: function() {
         return {    
+            errorMessage: '',
             origin: '', 
             destination: '', 
             departDate: moment(),
@@ -69,6 +70,9 @@ module.exports = React.createClass({
             success: function() {
                 console.log('Flight alert created.')
             },
+            error: function(xhr, status, err) {
+                this.setState({errorMessage: err})
+            }.bind(this), 
             datatype: 'json',
             contentType: 'application/json'
         })
@@ -79,6 +83,7 @@ module.exports = React.createClass({
 
     render: function() {
         return (
+            <div>
             <form className="flight-create" onSubmit={this.handleSubmit}>
                 <label>Round trip</label>
                 <input type="radio" 
@@ -91,22 +96,22 @@ module.exports = React.createClass({
                 <table>
                 <tbody>
                     <tr>
-                        <td>From (IATA): </td>
+                        <td>From (IATA) </td>
                         <td><input type="text" onChange={this.handleFromChange} /></td>
                     </tr>
                     <tr>
-                        <td>To (IATA): </td>
+                        <td>To (IATA) </td>
                         <td><input type="text" onChange={this.handleToChange} /></td>
                     </tr>
                     <tr>
-                        <td>Departure Date: </td>
+                        <td>Departure Date </td>
                         <td><DatePicker
                             selected={this.state.departDate}
                             onChange={this.handleDepartDateChange} />
                         </td>
                     </tr>
                     <tr>
-                        <td>Return Date: </td>
+                        <td>Return Date </td>
                         <td><DatePicker
                             selected={this.state.returnDate}
                             onChange={this.handleReturnDateChange}
@@ -114,13 +119,15 @@ module.exports = React.createClass({
                         </td>
                     </tr>
                     <tr>
-                        <td>Max price: </td>
+                        <td>Max price </td>
                         <td><input type="text" onChange={this.handlePriceChange}/></td>
                     </tr>
                 </tbody>
                 </table>
                 <button type="submit" >Create alert</button>
             </form>
+            <span>{(this.state.errorMessage) ? 'Invalid request' : ''}</span>
+            </div>
         )
     }
 })

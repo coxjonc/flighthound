@@ -38,7 +38,7 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div>
-                <p>{(this.state.data) ? this.state.data.username : ''}</p>
+                {(this.state.data) ? this.state.data.username : ''}
                 <button className="logout" onClick={this.logoutHandler}>Log out</button>
                 <h2>Create new alert</h2>
                 <FlightCreate />

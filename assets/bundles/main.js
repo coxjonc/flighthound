@@ -61763,7 +61763,6 @@
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
-	//add button to remove alert
 	var React = __webpack_require__(1);
 
 	module.exports = React.createClass({

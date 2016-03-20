@@ -1,4 +1,3 @@
-//add button to remove alert
 var React = require('react')
 
 module.exports = React.createClass({

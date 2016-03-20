@@ -28,7 +28,13 @@ var FlightApp = React.createClass({
     render: function() {
         return (
             <div>
-            <nav className="navbar navbar-inverse"></nav>
+            <nav className="navbar navbar-inverse">
+            <div className="container-fluid">
+                <div className="navbarHeader">
+                    <div className="navbar-brand">Flighthound</div>
+                </div>
+            </div>
+            </nav>
                 {this.props.children}
             </div>
         )

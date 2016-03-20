@@ -17,7 +17,7 @@ class Command(BaseCommand):
             origin = flight.origin_iata
             destination = flight.destination_iata
             depart_date = flight.depart_date
-            max_price = flight.max_price
+            max_price = "USD{}".format(flight.max_price)
 
             req = {
                 'request': {
@@ -31,6 +31,7 @@ class Command(BaseCommand):
                             'date': depart_date.strftime('%Y-%m-%d')
                         }    
                     ],
+                    'maxPrice': max_price,
                     'solutions': '1'
                 }
             }
@@ -50,20 +51,23 @@ class Command(BaseCommand):
                 data = json.dumps(req)
             )
             data = json.loads(r.text)
-            price = data['trips']['tripOption'][0]['saleTotal']
-            
-            message = (
-                "The price of a flight to {} from {} has dropped " 
-                "to {}. This is below your maximum price of " 
-                "USD{}".format(origin, destination, price, max_price))
 
-            print message
+            try:
+                price = data['trips']['tripOption'][0]['saleTotal']
             
-            if max_price >= price[3:]:
-                send_mail(
-                    'Flight price alert', 
-                    message,
-                    'flighthound@flighthound.com',
-                    flight.user.email,
-                    fail_silently = False
-                )
+                message = (
+                    "The price of a flight to {} from {} on {} has dropped " 
+                    "to {}. This is below your maximum price of " 
+                    "{}".format(origin, destination, depart_date, price, max_price))
+                
+                if max_price >= float(price[3:]):
+                    print message
+                    send_mail(
+                        'Flight price alert', 
+                        message,
+                        'flighthound@flighthound.com',
+                        flight.user.email,
+                        fail_silently = False
+                    )
+            except KeyError:
+                pass

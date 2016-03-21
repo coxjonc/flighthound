@@ -7,40 +7,6 @@ var auth = require('./auth')
 
 require('bootstrap-webpack')
 
-var FlightApp = React.createClass({
-    
-    getInitialState: function() {
-        return {
-            loggedIn: auth.loggedIn()
-        }
-    },
-    
-    updateAuth: function(loggedIn) {
-        this.setState({
-            loggedIn: loggedIn
-        })
-    },
-
-    componentDidMount: function() {
-        auth.onChange = this.updateAuth
-    },
-
-    render: function() {
-        return (
-            <div>
-            <nav className="navbar navbar-inverse">
-            <div className="container-fluid">
-                <div className="navbarHeader">
-                    <div className="navbar-brand">Flighthound</div>
-                </div>
-            </div>
-            </nav>
-                {this.props.children}
-            </div>
-        )
-    }
-})
-
 function requireAuth(nextState, replace) {
     if (!auth.loggedIn()) {
         replace({ 
@@ -52,10 +18,8 @@ function requireAuth(nextState, replace) {
 
 ReactDOM.render(
     <Router.Router history={Router.browserHistory}>
-        <Router.Route path='/app/' component={FlightApp}>
-            <Router.Route path='login/' component={Login} />
-            <Router.Route path='dashboard/' component={Dashboard} onEnter={requireAuth} />
-        </Router.Route>
+        <Router.Route path='/app/login/' component={Login} />
+        <Router.Route path='/app/dashboard/' component={Dashboard} onEnter={requireAuth} />
     </Router.Router>,
     document.getElementById('app')    
 )

@@ -1,6 +1,8 @@
 var React = require('react')
 var auth = require('./auth')
 
+require('bootstrap-webpack')
+
 module.exports = React.createClass({
     contextTypes: {
         router: React.PropTypes.object.isRequired
@@ -34,19 +36,48 @@ module.exports = React.createClass({
 
     render: function() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <table>
-                <tbody>
-                    <tr>
-                        <td><input placeholder='username' ref='username'/></td>
-                    </tr>
-                    <tr>
-                        <td><input placeholder='password' ref='pass'/></td>
-                    </tr>
-                </tbody>
-                </table>
-                <button type='submit'>login</button>
-            </form>
+            <div>
+            <nav className="navbar navbar-inverse">
+                <div className="container-fluid">
+                    <div className="navbar-brand">
+                        Flighthound
+                    </div>
+                </div>
+            </nav>
+            <div className="container-fluid">
+                <div className="row">
+                <div className="col-md-2">
+                <div className="panel panel-default">
+                    <div className="panel-heading">Login</div>
+                    <div className="panel-body">
+                    <form onSubmit={this.handleSubmit}>
+                        <fieldset className="form-group">
+                            <label htmlFor="inputUsername">Username</label>    
+                            <input placeholder="username" 
+                                className="form-control" 
+                                id="inputUsername" 
+                                type="text" 
+                                ref="username"/>
+                        </fieldset>
+                        <fieldset className="form-group">
+                            <label htmlFor="inputPassword">Password</label>
+                            <input 
+                                placeholder="password" 
+                                className="form-control"
+                                id="inputPassword" 
+                                type="password" 
+                                ref="pass"/>
+                        </fieldset>
+                        <button type="submit" 
+                        className="btn btn-primary" 
+                        onClick={this.handleSubmit}>Login</button>
+                    </form>
+                    </div>
+                </div>
+                </div>
+                </div>
+                </div>
+            </div>
         )
     }
 })

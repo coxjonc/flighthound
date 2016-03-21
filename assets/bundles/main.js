@@ -55,52 +55,6 @@
 
 	__webpack_require__(501);
 
-	var FlightApp = React.createClass({
-	    displayName: 'FlightApp',
-
-
-	    getInitialState: function getInitialState() {
-	        return {
-	            loggedIn: auth.loggedIn()
-	        };
-	    },
-
-	    updateAuth: function updateAuth(loggedIn) {
-	        this.setState({
-	            loggedIn: loggedIn
-	        });
-	    },
-
-	    componentDidMount: function componentDidMount() {
-	        auth.onChange = this.updateAuth;
-	    },
-
-	    render: function render() {
-	        return React.createElement(
-	            'div',
-	            null,
-	            React.createElement(
-	                'nav',
-	                { className: 'navbar navbar-inverse' },
-	                React.createElement(
-	                    'div',
-	                    { className: 'container-fluid' },
-	                    React.createElement(
-	                        'div',
-	                        { className: 'navbarHeader' },
-	                        React.createElement(
-	                            'div',
-	                            { className: 'navbar-brand' },
-	                            'Flighthound'
-	                        )
-	                    )
-	                )
-	            ),
-	            this.props.children
-	        );
-	    }
-	});
-
 	function requireAuth(nextState, replace) {
 	    if (!auth.loggedIn()) {
 	        replace({
@@ -113,12 +67,8 @@
 	ReactDOM.render(React.createElement(
 	    Router.Router,
 	    { history: Router.browserHistory },
-	    React.createElement(
-	        Router.Route,
-	        { path: '/app/', component: FlightApp },
-	        React.createElement(Router.Route, { path: 'login/', component: Login }),
-	        React.createElement(Router.Route, { path: 'dashboard/', component: Dashboard, onEnter: requireAuth })
-	    )
+	    React.createElement(Router.Route, { path: '/app/login/', component: Login }),
+	    React.createElement(Router.Route, { path: '/app/dashboard/', component: Dashboard, onEnter: requireAuth })
 	), document.getElementById('app'));
 
 /***/ },
@@ -24896,31 +24846,82 @@
 
 	    componentDidMount: function componentDidMount() {
 	        this.loadUserData();
-	        setInterval(this.loadUserData, 2000);
+	        //setInterval(this.loadUserData, 2000)
 	    },
 
 	    render: function render() {
 	        return React.createElement(
 	            'div',
 	            null,
-	            this.state.data ? this.state.data.username : '',
 	            React.createElement(
-	                'button',
-	                { className: 'logout', onClick: this.logoutHandler },
-	                'Log out'
+	                'nav',
+	                { className: 'navbar navbar-inverse' },
+	                React.createElement(
+	                    'div',
+	                    { className: 'container-fluid' },
+	                    React.createElement(
+	                        'div',
+	                        { className: 'navbar-brand' },
+	                        'Flighthound ',
+	                        this.state.data.username ? '[' + this.state.data.username + ']' : ''
+	                    ),
+	                    React.createElement(
+	                        'button',
+	                        { type: 'button',
+	                            className: 'btn btn-default navbar-btn',
+	                            onClick: this.logoutHandler },
+	                        'Log out'
+	                    )
+	                )
 	            ),
 	            React.createElement(
-	                'h2',
-	                null,
-	                'Create new alert'
-	            ),
-	            React.createElement(FlightCreate, null),
-	            React.createElement(
-	                'h2',
-	                null,
-	                'Your flight alerts'
-	            ),
-	            React.createElement(FlightList, { user: this.state.data })
+	                'div',
+	                { className: 'container-fluid' },
+	                React.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    React.createElement(
+	                        'div',
+	                        { className: 'col-md-2' },
+	                        React.createElement(
+	                            'div',
+	                            { className: 'panel panel-default' },
+	                            React.createElement(
+	                                'div',
+	                                { className: 'panel-heading' },
+	                                'Create Flight Alert'
+	                            ),
+	                            React.createElement(
+	                                'div',
+	                                { className: 'panel-body' },
+	                                React.createElement(FlightCreate, null)
+	                            )
+	                        )
+	                    )
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    React.createElement(
+	                        'div',
+	                        { className: 'col-md-2' },
+	                        React.createElement(
+	                            'div',
+	                            { className: 'panel panel-default' },
+	                            React.createElement(
+	                                'div',
+	                                { className: 'panel-heading' },
+	                                'Your Flight Alerts'
+	                            ),
+	                            React.createElement(
+	                                'div',
+	                                { className: 'panel-body' },
+	                                React.createElement(FlightList, { user: this.state.data })
+	                            )
+	                        )
+	                    )
+	                )
+	            )
 	        );
 	    }
 	});
@@ -34868,38 +34869,103 @@
 	                'form',
 	                { className: 'flight-create', onSubmit: this.handleSubmit },
 	                React.createElement(
+	                    'div',
+	                    { className: 'btn-group', 'data-toggle': 'buttons' },
+	                    React.createElement(
+	                        'label',
+	                        { className: 'btn btn-primary' },
+	                        React.createElement(
+	                            'input',
+	                            { type: 'radio',
+	                                autocomplete: 'off',
+	                                onClick: this.handleTypeChange,
+	                                checked: this.state.RoundTrip === true,
+	                                name: 'type' },
+	                            'Round-trip'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'label',
+	                        { className: 'btn btn-primary' },
+	                        React.createElement(
+	                            'input',
+	                            {
+	                                type: 'radio',
+	                                autocomplete: 'off',
+	                                checked: this.state.RoundTrip === false,
+	                                onClick: this.handleTypeChange,
+	                                name: 'type' },
+	                            'One-way'
+	                        )
+	                    )
+	                ),
+	                React.createElement(
 	                    'fieldset',
 	                    { className: 'form-group' },
 	                    React.createElement(
 	                        'label',
-	                        null,
-	                        'Round trip'
+	                        { htmlFor: 'from' },
+	                        'From (IATA)'
 	                    ),
-	                    React.createElement('input', { type: 'radio',
-	                        onChange: this.handleTypeChange,
-	                        checked: this.state.roundTrip === true }),
-	                    React.createElement(
-	                        'label',
-	                        null,
-	                        'One-way'
-	                    ),
-	                    React.createElement('input', { type: 'radio',
-	                        onChange: this.handleTypeChange,
-	                        checked: this.state.roundTrip === false })
+	                    React.createElement('input', {
+	                        type: 'text',
+	                        id: 'from',
+	                        className: 'form-control',
+	                        onChange: this.handleFromChange })
 	                ),
 	                React.createElement(
 	                    'fieldset',
-	                    null,
+	                    { className: 'form-group' },
 	                    React.createElement(
 	                        'label',
-	                        { 'for': 'from' },
-	                        'From (IATA)'
+	                        { htmlFor: 'to' },
+	                        'To (IATA)'
 	                    ),
-	                    React.createElement('input', { type: 'text', onChange: this.handleFromChange })
+	                    React.createElement('input', {
+	                        type: 'text',
+	                        id: 'from',
+	                        className: 'form-control',
+	                        onChange: this.handleToChange })
+	                ),
+	                React.createElement(
+	                    'fieldset',
+	                    { className: 'form-group' },
+	                    React.createElement(
+	                        'label',
+	                        { htmlFor: 'depart' },
+	                        'Departure date'
+	                    ),
+	                    React.createElement(DepartSelect, { onChange: this.handleDepartDateChange })
+	                ),
+	                React.createElement(
+	                    'fieldset',
+	                    { className: 'form-group' },
+	                    React.createElement(
+	                        'label',
+	                        { htmlFor: 'return' },
+	                        'Return date'
+	                    ),
+	                    React.createElement(ReturnSelect, { onChange: this.handleReturnDateChange, roundTrip: this.state.roundTrip })
+	                ),
+	                React.createElement(
+	                    'fieldset',
+	                    { className: 'form-group' },
+	                    React.createElement(
+	                        'label',
+	                        { htmlFor: 'price' },
+	                        'Price'
+	                    ),
+	                    React.createElement('input', {
+	                        type: 'text',
+	                        id: 'price',
+	                        className: 'form-control',
+	                        onChange: this.handlePriceChange })
 	                ),
 	                React.createElement(
 	                    'button',
-	                    { type: 'submit' },
+	                    { type: 'submit',
+	                        className: 'btn btn-primary',
+	                        onClick: this.handleSubmit },
 	                    'Create alert'
 	                )
 	            ),
@@ -64355,28 +64421,22 @@
 
 	module.exports = {
 	    login: function login(username, pass, cb) {
-	        var _this = this;
-
 	        if (localStorage.flighthound_token) {
 	            if (cb) cb(true);
-	            this.onChange(true);
 	            return;
 	        }
 	        this.getToken(username, pass, function (res) {
 	            if (res.authenticated) {
 	                localStorage.flighthound_token = res.token;
 	                if (cb) cb(true);
-	                _this.onChange(true);
 	            } else {
 	                if (cb) cb(false);
-	                _this.onChange(false);
 	            }
 	        });
 	    },
 
 	    logout: function logout() {
 	        delete localStorage.flighthound_token;
-	        this.onChange(false);
 	    },
 
 
@@ -64392,12 +64452,12 @@
 	                username: username,
 	                password: pass
 	            },
-	            success: function (res) {
+	            success: function success(res) {
 	                cb({
 	                    authenticated: true,
 	                    token: res.token
 	                });
-	            }.bind(this)
+	            }
 	        });
 	    }
 	};
@@ -64411,6 +64471,8 @@
 
 	var React = __webpack_require__(70);
 	var auth = __webpack_require__(523);
+
+	__webpack_require__(501);
 
 	module.exports = React.createClass({
 	    displayName: 'exports',
@@ -64449,38 +64511,85 @@
 
 	    render: function render() {
 	        return React.createElement(
-	            'form',
-	            { onSubmit: this.handleSubmit },
+	            'div',
+	            null,
 	            React.createElement(
-	                'table',
-	                null,
+	                'nav',
+	                { className: 'navbar navbar-inverse' },
 	                React.createElement(
-	                    'tbody',
-	                    null,
+	                    'div',
+	                    { className: 'container-fluid' },
 	                    React.createElement(
-	                        'tr',
-	                        null,
-	                        React.createElement(
-	                            'td',
-	                            null,
-	                            React.createElement('input', { placeholder: 'username', ref: 'username' })
-	                        )
-	                    ),
-	                    React.createElement(
-	                        'tr',
-	                        null,
-	                        React.createElement(
-	                            'td',
-	                            null,
-	                            React.createElement('input', { placeholder: 'password', ref: 'pass' })
-	                        )
+	                        'div',
+	                        { className: 'navbar-brand' },
+	                        'Flighthound'
 	                    )
 	                )
 	            ),
 	            React.createElement(
-	                'button',
-	                { type: 'submit' },
-	                'login'
+	                'div',
+	                { className: 'container-fluid' },
+	                React.createElement(
+	                    'div',
+	                    { className: 'row' },
+	                    React.createElement(
+	                        'div',
+	                        { className: 'col-md-2' },
+	                        React.createElement(
+	                            'div',
+	                            { className: 'panel panel-default' },
+	                            React.createElement(
+	                                'div',
+	                                { className: 'panel-heading' },
+	                                'Login'
+	                            ),
+	                            React.createElement(
+	                                'div',
+	                                { className: 'panel-body' },
+	                                React.createElement(
+	                                    'form',
+	                                    { onSubmit: this.handleSubmit },
+	                                    React.createElement(
+	                                        'fieldset',
+	                                        { className: 'form-group' },
+	                                        React.createElement(
+	                                            'label',
+	                                            { htmlFor: 'inputUsername' },
+	                                            'Username'
+	                                        ),
+	                                        React.createElement('input', { placeholder: 'username',
+	                                            className: 'form-control',
+	                                            id: 'inputUsername',
+	                                            type: 'text',
+	                                            ref: 'username' })
+	                                    ),
+	                                    React.createElement(
+	                                        'fieldset',
+	                                        { className: 'form-group' },
+	                                        React.createElement(
+	                                            'label',
+	                                            { htmlFor: 'inputPassword' },
+	                                            'Password'
+	                                        ),
+	                                        React.createElement('input', {
+	                                            placeholder: 'password',
+	                                            className: 'form-control',
+	                                            id: 'inputPassword',
+	                                            type: 'password',
+	                                            ref: 'pass' })
+	                                    ),
+	                                    React.createElement(
+	                                        'button',
+	                                        { type: 'submit',
+	                                            className: 'btn btn-primary',
+	                                            onClick: this.handleSubmit },
+	                                        'Login'
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
 	            )
 	        );
 	    }

@@ -32,18 +32,44 @@ module.exports = React.createClass({
 
     componentDidMount: function() {
         this.loadUserData()
-        setInterval(this.loadUserData, 2000)
+        //setInterval(this.loadUserData, 2000)
     },
 
     render: function() {
         return (
             <div>
-                {(this.state.data) ? this.state.data.username : ''}
-                <button className="logout" onClick={this.logoutHandler}>Log out</button>
-                <h2>Create new alert</h2>
-                <FlightCreate />
-                <h2>Your flight alerts</h2>
-                <FlightList user={this.state.data} />
+                <nav className="navbar navbar-inverse">
+                    <div className="container-fluid">
+                        <div className="navbar-brand">
+                            Flighthound {(this.state.data.username) ? '['+this.state.data.username +']': ''}
+                        </div>
+                        <button type="button" 
+                            className="btn btn-default navbar-btn"
+                            onClick={this.logoutHandler}>Log out</button>
+                    </div>
+                </nav>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-md-2">
+                            <div className="panel panel-default">
+                                <div className="panel-heading">Create Flight Alert</div>
+                                <div className="panel-body">
+                                    <FlightCreate />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-2">
+                            <div className="panel panel-default">
+                                <div className="panel-heading">Your Flight Alerts</div>
+                                <div className="panel-body">
+                                    <FlightList user={this.state.data} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

@@ -24882,7 +24882,7 @@
 	                    { className: 'row' },
 	                    React.createElement(
 	                        'div',
-	                        { className: 'col-md-2' },
+	                        { className: 'col-md-4' },
 	                        React.createElement(
 	                            'div',
 	                            { className: 'panel panel-default' },
@@ -24904,7 +24904,7 @@
 	                    { className: 'row' },
 	                    React.createElement(
 	                        'div',
-	                        { className: 'col-md-2' },
+	                        { className: 'col-md-4' },
 	                        React.createElement(
 	                            'div',
 	                            { className: 'panel panel-default' },
@@ -34804,6 +34804,7 @@
 	    },
 
 	    handleTypeChange: function handleTypeChange() {
+	        console.log('type changed');
 	        this.setState({
 	            roundTrip: !this.state.roundTrip
 	        });
@@ -34845,6 +34846,8 @@
 	            type: 'POST',
 	            url: '/api/flights/',
 	            data: (0, _stringify2.default)(formData),
+	            datatype: 'json',
+	            contentType: 'application/json',
 	            headers: {
 	                Authorization: 'Token ' + localStorage.flighthound_token
 	            },
@@ -34853,9 +34856,7 @@
 	            },
 	            error: function (xhr, status, err) {
 	                this.setState({ errorMessage: err });
-	            }.bind(this),
-	            datatype: 'json',
-	            contentType: 'application/json'
+	            }.bind(this)
 	        });
 	    },
 
@@ -34870,33 +34871,30 @@
 	                { className: 'flight-create', onSubmit: this.handleSubmit },
 	                React.createElement(
 	                    'div',
-	                    { className: 'btn-group', 'data-toggle': 'buttons' },
+	                    { className: 'radio' },
 	                    React.createElement(
 	                        'label',
-	                        { className: 'btn btn-primary' },
-	                        React.createElement(
-	                            'input',
-	                            { type: 'radio',
-	                                autocomplete: 'off',
-	                                onClick: this.handleTypeChange,
-	                                checked: this.state.RoundTrip === true,
-	                                name: 'type' },
-	                            'Round-trip'
-	                        )
-	                    ),
+	                        null,
+	                        React.createElement('input', { type: 'radio',
+	                            autocomplete: 'off',
+	                            onChange: this.handleTypeChange,
+	                            checked: this.state.roundTrip === true,
+	                            name: 'type' }),
+	                        'Round-trip'
+	                    )
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { className: 'radio' },
 	                    React.createElement(
 	                        'label',
-	                        { className: 'btn btn-primary' },
-	                        React.createElement(
-	                            'input',
-	                            {
-	                                type: 'radio',
-	                                autocomplete: 'off',
-	                                checked: this.state.RoundTrip === false,
-	                                onClick: this.handleTypeChange,
-	                                name: 'type' },
-	                            'One-way'
-	                        )
+	                        null,
+	                        React.createElement('input', { type: 'radio',
+	                            autocomplete: 'off',
+	                            checked: this.state.roundTrip === false,
+	                            onChange: this.handleTypeChange,
+	                            name: 'type' }),
+	                        'One-way'
 	                    )
 	                ),
 	                React.createElement(
@@ -34958,6 +34956,7 @@
 	                    React.createElement('input', {
 	                        type: 'text',
 	                        id: 'price',
+	                        placeholder: 'USD',
 	                        className: 'form-control',
 	                        onChange: this.handlePriceChange })
 	                ),
@@ -64498,14 +64497,7 @@
 	        auth.login(username, pass, function (loggedIn) {
 	            if (!loggedIn) return _this.setState({ error: true });
 
-	            var location = _this.props.location;
-
-
-	            if (location.state && location.state.nextPathname) {
-	                _this.context.router.replace(location.state.nextPathname);
-	            } else {
-	                _this.context.router.replace('/app/dashboard/');
-	            }
+	            _this.context.router.replace('/app/dashboard/');
 	        });
 	    },
 

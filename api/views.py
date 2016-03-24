@@ -12,6 +12,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     serializer_class = UserSerializer
     queryset = User.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
 
     def retrieve(self, request, pk=None):
         """
@@ -28,6 +29,7 @@ class FlightViewSet(viewsets.ModelViewSet):
     """
     serializer_class = FlightSerializer
     queryset = Flight.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -38,5 +40,6 @@ class AirportViewSet(viewsets.ModelViewSet):
     """
     serializer_class = AirportSerializer
     queryset = Airport.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('city',)

@@ -50,7 +50,7 @@ module.exports = React.createClass({
                 </nav>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-2">
+                        <div className="col-md-4">
                             <div className="panel panel-default">
                                 <div className="panel-heading">Create Flight Alert</div>
                                 <div className="panel-body">
@@ -60,7 +60,7 @@ module.exports = React.createClass({
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-2">
+                        <div className="col-md-4">
                             <div className="panel panel-default">
                                 <div className="panel-heading">Your Flight Alerts</div>
                                 <div className="panel-body">

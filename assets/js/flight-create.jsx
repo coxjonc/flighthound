@@ -24,8 +24,8 @@ module.exports = React.createClass({
     },
 
     handleTypeChange: function() {
-        this.setState({
             console.log('type changed')
+        this.setState({
             roundTrip: !this.state.roundTrip   
         })
     },
@@ -66,17 +66,17 @@ module.exports = React.createClass({
             type: 'POST',
             url: '/api/flights/',
             data: JSON.stringify(formData),
-        headers: {
-            Authorization: 'Token ' + localStorage.flighthound_token
-        },
+            datatype: 'json',
+            contentType: 'application/json',
+            headers: {
+                Authorization: 'Token ' + localStorage.flighthound_token
+            },
             success: function() {
                 console.log('Flight alert created.')
             },
             error: function(xhr, status, err) {
                 this.setState({errorMessage: err})
-            }.bind(this), 
-            datatype: 'json',
-            contentType: 'application/json'
+            }.bind(this) 
         })
     },
 
@@ -87,25 +87,24 @@ module.exports = React.createClass({
         return (
             <div>
             <form className="flight-create" onSubmit={this.handleSubmit}>
-                <div className="btn-group" data-toggle="buttons">
-                    <label className="btn btn-primary">
+                <div className="radio">
+                    <label>
                         <input type="radio" 
                             autocomplete="off"
-                            onClick={this.handleTypeChange}
-                            checked={this.state.RoundTrip === true}
-                            name="type">
+                            onChange={this.handleTypeChange}
+                            checked={this.state.roundTrip === true}
+                            name="type" />
                                 Round-trip
-                        </input>
                     </label>
-                    <label className="btn btn-primary">
-                        <input 
-                            type="radio"
+                </div>
+                <div className="radio">
+                    <label>
+                        <input type="radio"
                             autocomplete="off" 
-                            checked={this.state.RoundTrip === false}
-                            onClick={this.handleTypeChange}
-                            name="type">
+                            checked={this.state.roundTrip === false}
+                            onChange={this.handleTypeChange}
+                            name="type" />
                                 One-way
-                        </input>
                     </label>
                 </div>
                 <fieldset className="form-group">
@@ -126,7 +125,7 @@ module.exports = React.createClass({
                 </fieldset>
                 <fieldset className="form-group">
                     <label htmlFor="depart">Departure date</label>
-                    <DepartSelect onChange={this.handleDepartDateChange} />
+                    <DepartSelect  onChange={this.handleDepartDateChange} />
                 </fieldset>
                 <fieldset className="form-group">
                     <label htmlFor="return">Return date</label>
@@ -137,6 +136,7 @@ module.exports = React.createClass({
                     <input 
                         type="text" 
                         id="price"
+                        placeholder="USD"
                         className="form-control"
                         onChange={this.handlePriceChange} />
                 </fieldset>

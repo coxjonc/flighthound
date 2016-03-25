@@ -19,10 +19,9 @@ module.exports = React.createClass({
 
     render: function() {
         return (
-            <td><DatePicker
+            <DatePicker
                 selected={this.state.startDate}
                 onChange={this.handleChange} />
-            </td>
         )
     }
 })

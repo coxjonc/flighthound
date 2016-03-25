@@ -24,7 +24,7 @@ module.exports = React.createClass({
             if (!loggedIn) 
                 return this.setState({error:true})
 
-        this.context.router.replace('/app/dashboard/')
+        this.context.router.replace('/app/')
         })
     },
 

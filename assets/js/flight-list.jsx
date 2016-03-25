@@ -1,5 +1,7 @@
 var React = require('react')
 
+require('bootstrap-webpack')
+
 module.exports = React.createClass({
 
     handleDelete: function(url) {
@@ -16,16 +18,22 @@ module.exports = React.createClass({
     },
 
     render: function() {
+        var btnStyle = {
+            marginLeft: '10px',
+            marginBottom: '5px'
+        }
         if (this.props.user.flights) {
             var flightNodes = this.props.user.flights.map(
                 function(flight){
                     return (
                 <li key={flight.key}>
-                    {flight.origin_iata + ' to ' 
+                    {flight.origin_iata + ' >> ' 
                     + flight.destination_iata + ' on ' 
-                    + flight.depart_date +  
-                    '. Max price: ' + flight.max_price}
-                    <button onClick={this.handleDelete.bind(this, flight.url)}>
+                    + flight.depart_date + 
+                    '. Price: ' + flight.max_price}
+                    <button
+                        style={btnStyle}
+                        onClick={this.handleDelete.bind(this, flight.url)}>
                         Delete
                     </button>
                 </li>        

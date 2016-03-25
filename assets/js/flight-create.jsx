@@ -2,8 +2,6 @@ var React = require('react')
 var TypeInput = require('./type-input')
 var FromSelect = require('./from-select')
 var ToSelect = require('./to-select')
-var DepartSelect = require('./depart-select')
-var ReturnSelect = require('./return-select')
 var DatePicker = require('react-datepicker')
 var moment = require('moment')
 
@@ -24,7 +22,6 @@ module.exports = React.createClass({
     },
 
     handleTypeChange: function() {
-            console.log('type changed')
         this.setState({
             roundTrip: !this.state.roundTrip   
         })
@@ -108,36 +105,43 @@ module.exports = React.createClass({
                     </label>
                 </div>
                 <fieldset className="form-group">
-                    <label htmlFor="from">From (IATA)</label>
+                    <label htmlFor="from">From</label><br/>
                     <input 
+                        placeholder="IATA"
                         type="text" 
                         id="from"
-                        className="form-control"
+                        className="datepicker datepicker__input"
                         onChange={this.handleFromChange} />
                 </fieldset>
                 <fieldset className="form-group">
-                    <label htmlFor="to">To (IATA)</label>
+                    <label htmlFor="to">To</label><br/>
                     <input 
+                        placeholder="IATA"
                         type="text" 
-                        id="from"
-                        className="form-control"
+                        id="to"
+                        className="datepicker datepicker__input"
                         onChange={this.handleToChange} />
                 </fieldset>
                 <fieldset className="form-group">
                     <label htmlFor="depart">Departure date</label>
-                    <DepartSelect  onChange={this.handleDepartDateChange} />
+                    <DatePicker 
+                        selected={this.state.departDate}
+                        onChange={this.handleDepartDateChange} />
                 </fieldset>
                 <fieldset className="form-group">
                     <label htmlFor="return">Return date</label>
-                    <ReturnSelect onChange={this.handleReturnDateChange} roundTrip={this.state.roundTrip}/>
+                    <DatePicker
+                        selected={this.state.returnDate}
+                        onChange={this.handleReturnDateChange}
+                        disabled={!this.state.roundTrip}/>
                 </fieldset>
                 <fieldset className="form-group">
-                    <label htmlFor="price">Price</label>
+                    <label htmlFor="price">Price</label><br/>
                     <input 
                         type="text" 
                         id="price"
                         placeholder="USD"
-                        className="form-control"
+                        className="datepicker datepicker__input"
                         onChange={this.handlePriceChange} />
                 </fieldset>
                 <button type="submit"

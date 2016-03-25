@@ -32,7 +32,7 @@ module.exports = React.createClass({
 
     componentDidMount: function() {
         this.loadUserData()
-        //setInterval(this.loadUserData, 2000)
+        setInterval(this.loadUserData, 2000)
     },
 
     render: function() {

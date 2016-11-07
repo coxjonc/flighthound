@@ -1,4 +1,4 @@
-Flighthound
+Flighthound WORK IN PROGRESS
 ===========
 This single-page app allows users to create flight price alerts, and sends them an email when the
 price drops. The email backend is currently set up to just print to the console, but you could use
